@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'users/css/profile.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+  <div class="profile-page">
+
+    <div class="profile-topbar">
+      <div class="profile-breadcrumb">
+        <a href="{% url 'index' %}">Home</a>
+        <span class="sep">›</span>
+        <strong>My profile</strong>
+      </div>
+    </div>
+
+    <form method="post" action="{% url 'player_update' %}">
+      {% csrf_token %}
+
+      <div class="player-card">
+
+      <!-- LEFT PANEL -->
+      <div class="pc-left">
+        <div class="pc-avatar-wrap">
+          <div class="pc-avatar">
+            {{ current_user.first_name|first }}{{ current_user.last_name|first }}
+            <button class="pc-avatar-btn" title="Change photo">✎</button>
+          </div>
+        </div>
+
+        <div class="pc-name-block">
+          <span class="pc-name">{{ current_user.first_name }} {{ current_user.last_name }}</span>
+        </div>
+
+        <div class="pc-badges">
+          <span class="pc-badge">Season 2026</span>
+        </div>
+
+        <div class="pc-joined">Joined on {{ current_user.date_joined|date:"d.m.Y" }}</div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="pc-right">
+
+        <!-- TAB: Edit -->
+        <div class="pc-tab-content active" id="tab-edit">
+
+          <div class="edit-section-title">Personal details</div>
+
+          <div class="edit-grid">
+            <div class="edit-field">
+              <label for="f-age">Age</label>
+              <div class="edit-field-wrap">
+                <input name="age" type="text" id="f-age" min="8" max="99" value="{{ current_user.profile.age|default:'' }}">
+                <span class="unit">yrs</span>
+              </div>
+            </div>
+            <div class="edit-field">
+              <label for="f-height">Height</label>
+              <div class="edit-field-wrap">
+                <input name="height" type="text" id="f-height" min="100" max="230" value = "{{ current_user.profile.height|default:'' }}">
+                <span class="unit">cm</span>
+              </div>
+            </div>
+            <div class="edit-field">
+              <label for="f-phone">Phone</label>
+              <div class="edit-field-wrap">
+                <input name="phone" type="text" id="f-phone" value="{{ current_user.profile.phone }}">
+              </div>
+            </div>
+<!--            <div class="edit-field">-->
+<!--              <label for="f-position">Last event</label>-->
+<!--              <div class="edit-field-wrap">-->
+<!--                <input type="text" id="f-position" value="Forward">       &lt;!&ndash;Replace value&ndash;&gt;-->
+<!--              </div>-->
+<!--            </div>-->
+          </div>
+
+          <div class="edit-section-title">Contact details</div>
+          <div class="edit-grid">
+            <div class="edit-field">
+              <label for="f-email">Email</label>
+              <div class="edit-field-wrap">
+                <input name = "email" type="email" id="f-email" value="{{ current_user.email }}" disabled>
+              </div>
+            </div>
+            <div class="edit-field">
+              <label for="f-city">City</label>
+              <div class="edit-field-wrap">
+                <input type="text" id="f-city" value="{{ current_user.profile.city|default:'' }}" disabled>
+              </div>
+            </div>
+          </div>
+
+          <div class="edit-actions">
+            <button type="submit" class="btn-save" id="btn-save">Save changes</button>
+            <button type="button" class="btn-cancel" id="btn-cancel">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    </form>
+
+  </div>
+
+  <div class="toast" id="toast">✓ Changes saved</div>
+{% endblock %}
+
+  <script>
+    // Tabs
+    document.querySelectorAll('.pc-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.pc-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.pc-tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Save
+    document.getElementById('btn-save').addEventListener('click', () => {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2800);
+    });
+
+    // Cancel — reset fields
+    const originals = {};
+    document.querySelectorAll('.pc-tab-content input:not([disabled])').forEach(inp => {
+      originals[inp.id] = inp.value;
+    });
+    document.getElementById('btn-cancel').addEventListener('click', () => {
+      Object.entries(originals).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+    });
+  </script>
+
+</body>
+</html>

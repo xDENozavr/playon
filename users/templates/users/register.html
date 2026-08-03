@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up — PLAYON</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'playon/css/base.css' %}">
+  <link rel="stylesheet" href="{% static '/users/css/register.css' %}">
+</head>
+<body>
+
+<div class="auth-page">
+
+  <!-- ══════════ LEFT PANEL ══════════ -->
+  <div class="auth-left">
+
+    <a href="index.html" class="auth-logo">Play<span>On</span></a>
+
+    <div class="auth-left-center">
+
+      <h1 class="auth-left-title">
+        <span class="fill-red">YOUR</span><br>
+        <span class="outline">GAME</span><br>
+      </h1>
+
+      <p class="auth-left-desc">
+        Sign up and become part of the basketball community.
+        Games every weekend, fair refereeing, online stats.
+      </p>
+
+      <div class="auth-perks">
+        <div class="auth-perk">
+          <div class="auth-perk-ico">📅</div>
+          Schedule and announcements right in your account
+        </div>
+        <div class="auth-perk">
+          <div class="auth-perk-ico">🏆</div>
+          Take part in tournaments and playoffs
+        </div>
+        <div class="auth-perk">
+          <div class="auth-perk-ico">🏀</div>
+          Access to clubs and coaches
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-left-stats">
+      <div>
+        <span class="auth-stat-val">214</span>
+        <span class="auth-stat-label">Players</span>
+      </div>
+      <div>
+        <span class="auth-stat-val">18</span>
+        <span class="auth-stat-label">Teams</span>
+      </div>
+      <div>
+        <span class="auth-stat-val">430+</span>
+        <span class="auth-stat-label">Matches</span>
+      </div>
+    </div>
+
+    <div class="auth-bg-text" aria-hidden="true">PO</div>
+  </div>
+
+  <!-- ══════════ RIGHT PANEL ══════════ -->
+  <div class="auth-right">
+
+    <!-- Mobile header (visible only on mobile) -->
+    <div class="auth-mobile-header">
+      <a href="{% url 'index' %}" class="auth-mobile-logo">Play<span>On</span></a>
+      <a href="{% url 'index' %}" class="auth-mobile-back">Home</a>
+    </div>
+
+    <!-- Tab switcher -->
+    <div class="auth-tabs" id="auth-tabs">
+      <button class="auth-tab active" data-tab="register">Sign up</button>
+      <button class="auth-tab" data-tab="login">Sign in</button>
+    </div>
+
+    <!-- ── REGISTRATION FORM ── -->
+    <form class="auth-form-wrap active" id="form-register" action="{% url 'register' %}" method="post">
+      {% csrf_token %}
+      <div class="auth-form-title">New account</div>
+      <div class="auth-form-sub">
+        Already have an account?
+        <button class="auth-switch-inline" data-goto="login" style="background:none;border:none;color:var(--red);font-family:'Barlow Condensed',sans-serif;font-size:.82rem;letter-spacing:.04em;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">
+          Sign in →
+        </button>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="r-firstname">First name</label>
+          <div class="field-wrap">
+            <input type="text" id="r-firstname" name="first_name" placeholder="Alex" autocomplete="given-name">
+            <span class="field-ico">👤</span>
+          </div>
+          <div class="field-error" id="err-firstname">Enter your first name</div>
+        </div>
+        <div class="field">
+          <label for="r-lastname">Last name</label>
+          <div class="field-wrap">
+            <input type="text" id="r-lastname" name="last_name" placeholder="Smith" autocomplete="family-name">
+          </div>
+          <div class="field-error" id="err-lastname">Enter your last name</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="r-email">Email</label>
+        <div class="field-wrap">
+          <input type="email" id="r-email" name="email" placeholder="example@gmail.com" autocomplete="email">
+          <span class="field-ico">✉</span>
+        </div>
+        <div class="field-error" id="err-email">Enter a valid email</div>
+      </div>
+
+      <div class="field">
+        <label for="r-phone">Phone</label>
+        <div class="field-wrap">
+          <input type="tel" id="r-phone" name="phone" placeholder="+380 (__) ___-__-__" autocomplete="tel">
+          <span class="field-ico">📞</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-city">City:</label>
+        <div class="field-wrap">
+          <input type="text" name="city" id="f-city" placeholder="e.g. Vinnytsia" required>
+          <span class="field-ico">🏙</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="r-password">Password</label>
+        <div class="field-wrap">
+          <input type="password" id="r-password" name="password" placeholder="At least 8 characters" autocomplete="new-password">
+          <button class="toggle-pass" type="button" data-target="r-password" aria-label="Show password">👁</button>
+        </div>
+        <div class="password-strength" id="strength-wrap">
+          <div class="strength-bar">
+            <div class="strength-seg" id="seg1"></div>
+            <div class="strength-seg" id="seg2"></div>
+            <div class="strength-seg" id="seg3"></div>
+            <div class="strength-seg" id="seg4"></div>
+          </div>
+          <span class="strength-label" id="strength-label">—</span>
+        </div>
+        <div class="field-error" id="err-password">At least 8 characters</div>
+      </div>
+
+      <div class="field">
+        <label for="r-password2">Confirm password</label>
+        <div class="field-wrap">
+          <input type="password" id="r-password2" name="password2" placeholder="Repeat password" autocomplete="new-password">
+          <button class="toggle-pass" type="button" data-target="r-password2" aria-label="Show password">👁</button>
+        </div>
+        <div class="field-error" id="err-password2">Passwords do not match</div>
+      </div>
+
+<!--       <label class="field-check">
+        <input type="checkbox" id="r-agree">
+        <span>
+          I agree to the
+          <a href="#">League Rules</a>
+          and
+          <a href="#">Privacy Policy</a>
+        </span>
+      </label> -->
+
+      <button class="auth-submit" id="btn-register">Sign up →</button>
+
+      <div class="auth-divider">or</div>
+
+      <div class="auth-switch">
+        Already have an account?
+        <button data-goto="login">Sign in</button>
+      </div>
+
+    </form>
+
+    <!-- ── LOGIN FORM ── -->
+    <form class="auth-form-wrap" id="form-login" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <div class="auth-form-title">Welcome back</div>
+      <div class="auth-form-sub">
+        First time here?
+        <button class="auth-switch-inline" data-goto="register" style="background:none;border:none;color:var(--red);font-family:'Barlow Condensed',sans-serif;font-size:.82rem;letter-spacing:.04em;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">
+          Sign up →
+        </button>
+      </div>
+
+      <div class="field">
+        <label for="l-email">Email</label>
+        <div class="field-wrap">
+          <input type="email" id="l-email" name="email" placeholder="example@gmail.com" autocomplete="email">
+          <span class="field-ico">✉</span>
+        </div>
+        <div class="field-error" id="err-l-email">Enter your email</div>
+      </div>
+
+      <div class="field">
+        <label for="l-password">Password</label>
+        <div class="field-wrap">
+          <input type="password" id="l-password" name="password" placeholder="Your password" autocomplete="current-password">
+          <button class="toggle-pass" type="button" data-target="l-password" aria-label="Show password">👁</button>
+        </div>
+        <div class="field-error" id="err-l-password">Enter your password</div>
+      </div>
+
+      <a href="#" class="forgot-link">Forgot your password?</a>
+
+      <button class="auth-submit" id="btn-login">Sign in →</button>
+
+      <div class="auth-divider">or</div>
+
+      <div class="auth-switch">
+        Don't have an account yet?
+        <button data-goto="register">Sign up</button>
+      </div>
+
+    </form>
+
+    <!-- ── SUCCESS SCREEN ── -->
+    <div class="auth-success" id="auth-success">
+      <div class="success-icon">🏀</div>
+      <h2>Welcome!</h2>
+      <p id="success-msg">
+        Account created. Check your inbox — we've sent a confirmation email.
+      </p>
+      <a href="{% url 'index' %}">Go home →</a>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ══════════ SCRIPTS ══════════ -->
+<script src="{% static 'users/js/register.js' %}"></script>
+
+</body>
+</html>

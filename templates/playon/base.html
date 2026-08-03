@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLAYON — Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'playon/css/base.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-logo">Play<span>On</span></div>
+    <ul class="nav-links">
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'about' %}">About</a></li>
+      <li><a href="{% url 'calendar' %}">Calendar</a></li>
+      <li><a href="{% url 'teams' %}">Teams</a></li>
+      <li><a href="{% url 'club' %}">Clubs</a></li>
+    </ul>
+    {% if user.is_authenticated %}
+      <!-- Logged in -->
+      <div class="nav-user">
+        <a href="{% url 'profile' %}" class="nav-user-btn">
+          <div class="nav-avatar">{{ user.first_name|first }}{{ user.last_name|first }}</div>
+          <span>{{ user.first_name }}</span>
+        </a>
+        <a href="{% url 'logout' %}" class="nav-logout" title="Log out">✕</a>
+      </div>
+    {% else %}
+      <!-- Not authenticated -->
+      <a href="{% url 'register' %}" class="nav-btn">Sign up</a>
+    {% endif %}
+  </nav>
+
+  {% block content %}
+  {% endblock %}
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand">
+      <span class="nav-logo">PLAY<span>ON</span></span>
+      <p>Your city's basketball league. Played with heart.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>League</h4>
+      <ul>
+        <li><a href="{% url 'rules' %}">Rules</a></li>
+        <li><a href="{% url 'calendar' %}">Calendar</a></li>
+        <li><a href="{% url 'club' %}">Clubs</a></li>
+        <li><a href="#">Photo archive</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-links">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">playon@gmail.com</a></li>
+        <li><a href="https://www.instagram.com/playon" target="_blank">Instagram</a></li>
+        <li><a href="https://t.me/PlayOnBC" target="_blank">Telegram</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 PlayOn</span>
+      <span>Made with ❤ for basketball</span>
+    </div>
+  </footer>
+
+<!-- Global JS scripts -->
+  <script src="{% static 'playon/js/base.js' %}"></script>
+
+</body>
+</html>
