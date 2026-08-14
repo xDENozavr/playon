@@ -1,6 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.base_user import BaseUserManager
 from .validators import validate_age, validate_height, validate_avatar_size, validate_avatar_format, validate_phone
+
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("Email is required")
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        return self.create_user(email, password, **extra_fields)
 
 
 class User(AbstractUser):
@@ -11,8 +28,13 @@ class User(AbstractUser):
     e.g. switching to email-based login — without a costly migration
     later. All player-specific data lives on Profile instead.
     """
-    pass
+    username = None
+    email = models.EmailField(unique=True)
 
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
 
 class Profile(models.Model):
     """Player-specific data, kept separate from User.

@@ -140,6 +140,18 @@ nav {
 }
 
 .nav-logout {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.nav-logout {
   width: 34px; height: 34px;
   display: flex; align-items: center; justify-content: center;
   border: 1px solid rgba(255,255,255,.08);

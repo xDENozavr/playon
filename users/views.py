@@ -1,4 +1,8 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
+from django.urls.base import reverse_lazy
+from django.views.generic.edit import UpdateView
+
 from .forms import RegisterForm
 from .models import User, Profile
 from django.contrib.auth import login
@@ -8,7 +12,6 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.urls import reverse
 
 # Create your views here.
-
 def register_view(request):
     """Handle user registration via AJAX form submission (see register.js).
 
@@ -31,6 +34,7 @@ def register_view(request):
             login(request, user)
             return JsonResponse({'status': 'success', 'redirect': reverse('profile')})
         else:
+            print(form.errors)
             return JsonResponse({'status': 'error', 'message': 'Please check the form fields.'})
     else:
         form = RegisterForm()
@@ -39,32 +43,31 @@ def register_view(request):
 
 
 def login_view(request):
-    """Handle user login via AJAX form submission (see register.js).
-
-    The login form on the frontend collects an email, but Django's
-    User model authenticates by username (USERNAME_FIELD). We look
-    up the username by email first, then authenticate normally.
-    """
+    """Handle user login via AJAX form submission (see register.js)."""
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        try:
-            user_obj = User.objects.get(email=email)
-            username = user_obj.username
-        except User.DoesNotExist:
-            # Same generic message as a wrong password, so we don't
-            # reveal whether an account with this email exists.
-            return JsonResponse({'status': 'error', 'message': 'Invalid email or password'})
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=email, password=password)
         if user is not None:
             auth_login(request, user)
             return JsonResponse({'status': 'success', 'redirect': reverse('profile')})
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid email or password'})
+    else:
+        return redirect('register')
 
 
-# TODO: add player_update view for editing age/height/avatar
+
+class PlayerUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ["age", "height", "avatar"]
+    template_name = "users/player_update.html"
+    success_url = reverse_lazy("profile")
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+
 @login_required
 def profile_view(request):
     """Display the logged-in user's profile page.

@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'blog/css/about.css' %}">
+{% endblock %}
+
+
+{% block content %}
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-tag">Since 2019 · City League</div>
+      <h1 class="page-hero-title">
+        <span class="outline">PLAY</span> <span class="fill-red">ON</span>
+      </h1>
+      <p class="page-hero-sub">
+        We are an amateur basketball league that grew from five friends
+        and one playground court into a full-fledged city organization.
+      </p>
+    </div>
+    <!-- Animated ball -->
+    <div class="hero-ball-wrap" aria-hidden="true">
+      <svg class="hero-ball-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ball-orbit" cx="120" cy="120" r="110" stroke="rgba(134,0,1,0.18)" stroke-width="1" stroke-dasharray="8 6"/>
+        <g class="ball-spin">
+          <circle cx="120" cy="120" r="88" stroke="rgba(255,255,255,0.85)" stroke-width="2.5" fill="none"/>
+          <path d="M120 32 C120 32, 78 70, 78 120 C78 170, 120 208, 120 208" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+          <path d="M120 32 C120 32, 162 70, 162 120 C162 170, 120 208, 120 208" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+          <path d="M32 120 L208 120" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+          <path d="M32 120 C58 100, 95 88, 120 88 C145 88, 182 100, 208 120" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+          <path d="M32 120 C58 140, 95 152, 120 152 C145 152, 182 140, 208 120" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        </g>
+        <ellipse class="ball-shadow" cx="120" cy="235" rx="55" ry="6" fill="rgba(134,0,1,0.3)"/>
+        <circle class="pulse-ring r1" cx="120" cy="120" r="100" stroke="rgba(134,0,1,0.15)" stroke-width="1" fill="none"/>
+        <circle class="pulse-ring r2" cx="120" cy="120" r="115" stroke="rgba(134,0,1,0.08)" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="page-hero-year" aria-hidden="true">2019</div>
+    <div class="page-hero-divider"></div>
+  </section>
+
+ <!-- STATS -->
+  <div class="about-stats reveal">
+    <div class="about-stat">
+      <span class="about-stat-val">7</span>
+      <span class="about-stat-label">Years in the city</span>
+    </div>
+    <div class="about-stat">
+      <span class="about-stat-val">{{ teams_count }}</span>
+      <span class="about-stat-label">Teams right now</span>
+    </div>
+    <div class="about-stat">
+      <span class="about-stat-val">{{ players_count }}</span>
+      <span class="about-stat-label">Players</span>
+    </div>
+    <div class="about-stat">
+      <span class="about-stat-val">6</span>
+      <span class="about-stat-label">Courts</span>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <section class="history-section reveal">
+
+    <!-- Text -->
+    <div class="history-text">
+      <div class="section-label">Our history</div>
+      <h2 class="section-title">HOW IT ALL<br>STARTED</h2>
+      <p>
+        In 2019, five friends started meeting every Sunday at a court in the park.
+        No rules, no schedule —
+        <strong>just a ball and the will to play</strong>.
+        By the end of summer two more teams had shown up, and it was clear: we needed a league.
+      </p>
+      <p>
+        The first season ran across three courts and brought together 6 teams. Referees
+        were volunteers, stats were tracked in Google Sheets, and the trophy was welded
+        by one founder's neighbor. <strong>It was a little rough around the edges — but it was real</strong>.
+      </p>
+      <p>
+        Today we have 18 teams, our own stats-tracking system, three partner gyms, and
+        a referee crew. But the spirit stayed the same: basketball for everyone, no
+        attitude, no unnecessary barriers.
+      </p>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2019</span></div>
+        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <h4>First game</h4>
+          <p>Five friends, one court in the park, zero rules. This is where it all began.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2020</span></div>
+        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <h4>First season</h4>
+          <p>6 teams, 3 courts, 38 matches. First champion — the Falcons.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2021</span></div>
+        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <h4>Moving indoors</h4>
+          <p>Signed our first agreement with the Dynamo gym. Winter season — indoors for the first time.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2022</span></div>
+        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <h4>10 teams and a website</h4>
+          <p>Twice as many players... Launched online stats.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2024</span></div>
+        <div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <h4>First playoffs</h4>
+          <p>Introduced a playoff format with a trophy and an awards ceremony. 15 teams, a sold-out final.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2026</span></div>
+        <div class="tl-mid"><div class="tl-dot tl-dot-now"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <h4>Now</h4>
+          <p>18 teams, 214 players, 6 courts. And we're just warming up.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="values-section reveal">
+    <div class="section-label">What drives us</div>
+    <h2 class="section-title">OUR<br>VALUES</h2>
+
+    <div class="values-grid">
+
+      <div class="value-card">
+        <div class="value-num">01</div>
+        <span class="value-icon">🏀</span>
+        <div class="value-title">Basketball for everyone</div>
+        <p class="value-text">It doesn't matter how old you are or how long it's been since you held a ball. If you want to play, we'll find you a spot.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-num">02</div>
+        <span class="value-icon">🤝</span>
+        <div class="value-title">Fair play</div>
+        <p class="value-text">We stand for respect on the court. Referees are part of the community. Disputes get settled at the table, not by shouting.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-num">03</div>
+        <span class="value-icon">📈</span>
+        <div class="value-title">Everyone's growth</div>
+        <p class="value-text">Track your game, analyze it, improve. We give you the data — you decide what to do with it.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-num">04</div>
+        <span class="value-icon">🏙️</span>
+        <div class="value-title">The city is our home</div>
+        <p class="value-text">We play on public courts and take care of them. The league is part of city life, not a closed club.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team-section reveal">
+    <div class="section-label">The people behind it</div>
+    <h2 class="section-title">OUR<br>TEAM</h2>
+
+    <div class="team-grid">
+
+      <div class="member-card">
+        <div class="member-avatar">OK</div>
+        <div class="member-name">Oleksii Kyrylov</div>
+        <div class="member-role">Founder · Director</div>
+        <p class="member-bio">Playing since he was 14. Started the league in 2019 after failing to find a place to sign up himself.</p>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">MV</div>
+        <div class="member-name">Maria Volkova</div>
+        <div class="member-role">Operations Director</div>
+        <p class="member-bio">Handles the schedule, the gyms, and everything that keeps the league running, not just looking good.</p>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">SP</div>
+        <div class="member-name">Serhii Petrenko</div>
+        <div class="member-role">Head Referee</div>
+        <p class="member-bio">First-category referee since 2015. Trains the crew and officiates the toughest matches.</p>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">DN</div>
+        <div class="member-name">Denys Novikov</div>
+        <div class="member-role">Stats & IT</div>
+        <p class="member-bio">Built the stats system from scratch. If you see a nice-looking number on the site, that's his work.</p>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">OS</div>
+        <div class="member-name">Olha Smirnova</div>
+        <div class="member-role">Communications</div>
+        <p class="member-bio">Runs the social media, writes match recaps, and makes sure the league is visible beyond the court.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="partners-section reveal">
+    <div class="section-label">Trusted by</div>
+    <h2 class="section-title">PARTNERS</h2>
+
+    <div class="partners-row">
+      <div class="partner-cell">
+        <div class="partner-name">Kryvbasbasket</div>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-name">Sport Complex<br>Center</div>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-name">Vikonda</div>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-name">SportCity<br>Gear</div>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-name">City<br>Sports</div>
+      </div>
+    </div>
+  </section>
+
+<!-- REGISTRATION -->
+  <section id="register" class="register-section">
+    <div class="section-label">Season 2026 is open</div>
+    <h2 class="section-title">JOIN<br>US</h2>
+    <p>Build your team and join the city league. Games every weekend, fair referees, online stats.</p>
+    <a href="{% url 'create_team' %}" class="btn-white">Register a team →</a>
+  </section>
+
+{% endblock %}

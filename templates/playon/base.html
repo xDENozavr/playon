@@ -17,11 +17,11 @@
   <nav>
     <div class="nav-logo">Play<span>On</span></div>
     <ul class="nav-links">
-      <li><a href="{% url 'index' %}">Home</a></li>
-      <li><a href="{% url 'about' %}">About</a></li>
-      <li><a href="{% url 'calendar' %}">Calendar</a></li>
-      <li><a href="{% url 'teams' %}">Teams</a></li>
-      <li><a href="{% url 'club' %}">Clubs</a></li>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Calendar</a></li>
+      <li><a href="#">Teams</a></li>
+      <li><a href="#">Clubs</a></li>
     </ul>
     {% if user.is_authenticated %}
       <!-- Logged in -->
@@ -30,7 +30,10 @@
           <div class="nav-avatar">{{ user.first_name|first }}{{ user.last_name|first }}</div>
           <span>{{ user.first_name }}</span>
         </a>
-        <a href="{% url 'logout' %}" class="nav-logout" title="Log out">✕</a>
+        <form method="post" action="{% url 'logout' %}" style="display:inline">
+            {% csrf_token %}
+            <button type="submit" class="nav-logout" title="Log out">×</button>
+        </form>
       </div>
     {% else %}
       <!-- Not authenticated -->
@@ -51,9 +54,9 @@
     <div class="footer-links">
       <h4>League</h4>
       <ul>
-        <li><a href="{% url 'rules' %}">Rules</a></li>
-        <li><a href="{% url 'calendar' %}">Calendar</a></li>
-        <li><a href="{% url 'club' %}">Clubs</a></li>
+        <li><a href="#">Rules</a></li>
+        <li><a href="#">Calendar</a></li>
+        <li><a href="#">Clubs</a></li>
         <li><a href="#">Photo archive</a></li>
       </ul>
     </div>

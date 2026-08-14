@@ -16,10 +16,11 @@ class ProfileInline(admin.StackedInline):
 
 
 class CustomUserAdmin(UserAdmin):
+    ordering = ["email"]
     inlines = [ProfileInline]
-    list_display = ["username", "email", "is_active", "is_staff", "date_joined"]
+    list_display = ["email", "first_name", "last_name", "is_active", "is_staff", "date_joined"]
     list_filter = ['is_active', 'is_staff']
-    search_fields = ["username", "email"]
+    search_fields = ["email", "first_name", "last_name"]
 
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Profile)

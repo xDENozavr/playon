@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'blog/css/styles.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<!--  HERO  -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+
+    <div class="hero-inner">
+      <div class="hero-eyebrow">City League · Season 2026</div>
+      <h1 class="hero-title">
+        <span class="outline">PLAY</span><span class="fill-red">ON</span><br>
+        <span><span class="outline">YOUR</span>GAME</span>
+      </h1>
+      <p class="hero-sub">
+        Basketball for everyone — from playground courts to indoor arenas.
+        Teams, tournaments, awards.
+      </p>
+      <div class="hero-cta">
+        <a href="{% url 'calendar' %}" class="btn-primary">View calendar</a>
+        <a href="#register" class="btn-outline">Register a team</a>
+      </div>
+    </div>
+
+    <!-- Decorative ball -->
+    <svg class="hero-ball" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="100" cy="100" r="96" stroke="white" stroke-width="2"/>
+      <path d="M100 4 C100 4, 60 50, 60 100 C60 150, 100 196, 100 196" stroke="white" stroke-width="2"/>
+      <path d="M100 4 C100 4, 140 50, 140 100 C140 150, 100 196, 100 196" stroke="white" stroke-width="2"/>
+      <path d="M4 100 L196 100" stroke="white" stroke-width="2"/>
+      <path d="M4 100 C30 80, 80 68, 100 68 C120 68, 170 80, 196 100" stroke="white" stroke-width="1.5"/>
+      <path d="M4 100 C30 120, 80 132, 100 132 C120 132, 170 120, 196 100" stroke="white" stroke-width="1.5"/>
+    </svg>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar reveal">
+    <div class="stat-item">
+      <div class="stat-num">{{ teams_count }}</div>
+      <div class="stat-label">Teams in the league</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">{{ players_count }}</div>
+      <div class="stat-label">Players</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100+</div>
+      <div class="stat-label">Matches played</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Courts</div>
+    </div>
+  </div>
+
+<!-- NEWS SLIDER -->
+
+
+
+
+
+
+
+
+
+  <section class="news-section reveal" id="news">
+    <div class="news-header">
+      <h2 class="news-heading">Latest <em>news</em></h2>
+      <div class="news-nav">
+        <button class="news-btn" id="news-prev" aria-label="Previous">←</button>
+        <button class="news-btn" id="news-next" aria-label="Next">→</button>
+      </div>
+    </div>
+
+    <div class="news-viewport">
+      <div class="news-track" id="news-track">
+
+        {% for new in news %}
+          <article class="news-card">
+                  <div class="news-card-img" style="background:#1a1a1a">
+                    <div class="news-card-img-inner">
+<!--                      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">-->
+<!--                        <circle cx="40" cy="40" r="38" stroke="white" stroke-width="2"/>-->
+<!--                        <path d="M40 2C40 2,24 20,24 40C24 60,40 78,40 78" stroke="white" stroke-width="2"/>-->
+<!--                        <path d="M40 2C40 2,56 20,56 40C56 60,40 78,40 78" stroke="white" stroke-width="2"/>-->
+<!--                        <path d="M2 40L78 40" stroke="white" stroke-width="2"/>-->
+<!--                      </svg>-->
+                      <img src="{{ new.image.url }}" alt="{{ new.title }}">
+                    </div>
+                  </div>
+                  <div class="news-card-body">
+                    <div class="news-card-date">{{ new.date }}</div>
+                    <h3 class="news-card-title">{{ new.title }}</h3>
+                    <p class="news-card-excerpt">{{ new.text_content }}</p>
+                  </div>
+                  <div class="news-card-footer">Read more</div>
+                </article>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="news-dots" id="news-dots"></div>
+  </section>
+
+  <!-- STANDINGS TABLE -->
+  <section id="standings" class="standings-section">
+    <div class="section-label">Season 2026</div>
+    <h2 class="section-title reveal">STANDINGS</h2>
+
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Played</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>Points (AVG)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rank top">1</td>
+            <td class="team-name">Red Machine</td>
+            <td>12</td><td>10</td><td>2</td>
+            <td class="points">20</td>
+          </tr>
+          <tr>
+            <td class="rank top">2</td>
+            <td class="team-name">Falcons</td>
+            <td>12</td><td>9</td><td>3</td>
+            <td class="points">18</td>
+          </tr>
+          <tr>
+            <td class="rank top">3</td>
+            <td class="team-name">Steel</td>
+            <td>12</td><td>8</td><td>4</td>
+            <td class="points">16</td>
+          </tr>
+          <tr>
+            <td class="rank">4</td>
+            <td class="team-name">Wolves</td>
+            <td>12</td><td>6</td><td>6</td>
+            <td class="points">12</td>
+          </tr>
+          <tr>
+            <td class="rank">5</td>
+            <td class="team-name">Bears</td>
+            <td>12</td><td>5</td><td>7</td>
+            <td class="points">10</td>
+          </tr>
+          <tr>
+            <td class="rank">6</td>
+            <td class="team-name">Fog</td>
+            <td>12</td><td>3</td><td>9</td>
+            <td class="points">6</td>
+          </tr>
+          <tr>
+            <td class="rank">7</td>
+            <td class="team-name">Concrete</td>
+            <td>12</td><td>1</td><td>11</td>
+            <td class="points">2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PLAYER OF THE WEEK -->
+  <section id="players">
+    <div class="section-label">Top players</div>
+    <h2 class="section-title reveal">PLAYER<br>OF THE WEEK</h2>
+
+    <div class="players-grid reveal">
+      <div class="player-card" data-num="">
+        <div class="player-name">Artem Kozlov</div>
+        <!-- <div class="player-stats">
+          <div class="pstat">
+            <div class="pstat-val">24.1</div>
+            <div class="pstat-key">Points</div>
+          </div>
+          <div class="pstat">
+            <div class="pstat-val">7.4</div>
+            <div class="pstat-key">Rebounds</div>
+          </div>
+          <div class="pstat">
+            <div class="pstat-val">3.2</div>
+            <div class="pstat-key">Assists</div>
+          </div>
+        </div> -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LEAGUE REGISTRATION -->
+  <section id="register" class="register-section">
+    <div class="section-label">Season 2026 is open</div>
+    <h2 class="section-title">JOIN<br>US</h2>
+    <p>Build your team and join the city league. Games every weekend, fair referees, online stats.</p>
+    <a href="{% url 'create_team' %}" class="btn-white">Register a team →</a>
+  </section>
+{% endblock %}

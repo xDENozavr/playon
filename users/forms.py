@@ -15,4 +15,4 @@ class RegisterForm(UserCreationForm):
     city = forms.CharField(max_length=100, required=False)
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email',)
+        fields = ('first_name', 'last_name', 'email',)
