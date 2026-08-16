@@ -10,8 +10,11 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login
 from django.urls import reverse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import UserSerializer
 
-# Create your views here.
+
 def register_view(request):
     """Handle user registration via AJAX form submission (see register.js).
 
@@ -23,10 +26,14 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
 
-            # phone and city are declared directly on RegisterForm (not on the
-            # User model), so they don't come from form.save() — they need to
-            # be pulled from cleaned_data manually and saved to Profile.
-            Profile.objects.create(user=user, phone=form.cleaned_data.get('phone'), city=form.cleaned_data.get('city'))
+            # Profile is created automatically by the post_save signal
+            # (see users/signals.py) as soon as form.save() creates the
+            # User. phone/city live on RegisterForm, not on the User
+            # model, so they don't come through form.save() — we fill
+            # them in on the already-existing profile here.
+            user.profile.phone = form.cleaned_data.get('phone')
+            user.profile.city = form.cleaned_data.get('city')
+            user.profile.save()
 
             # Log the user in right after registration so they land on
             # their profile already authenticated, without a separate
@@ -34,7 +41,6 @@ def register_view(request):
             login(request, user)
             return JsonResponse({'status': 'success', 'redirect': reverse('profile')})
         else:
-            print(form.errors)
             return JsonResponse({'status': 'error', 'message': 'Please check the form fields.'})
     else:
         form = RegisterForm()
@@ -43,7 +49,14 @@ def register_view(request):
 
 
 def login_view(request):
-    """Handle user login via AJAX form submission (see register.js)."""
+    """Handle user login via AJAX form submission (see register.js).
+
+    The login form on the frontend collects an email, but Django's
+    authenticate() always names its credential argument "username" —
+    that's just the parameter name. Since USERNAME_FIELD is set to
+    "email" on the User model, Django compares it against email under
+    the hood.
+    """
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -55,11 +68,19 @@ def login_view(request):
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid email or password'})
     else:
+        # No separate login page — /login/ and /register/ share the same
+        # template (with tabs), so a GET request here just sends the
+        # user to the page that actually renders it.
         return redirect('register')
 
 
-
 class PlayerUpdateView(LoginRequiredMixin, UpdateView):
+    """Edit the logged-in user's own profile (age, height, avatar).
+
+    get_object() is overridden so the URL never needs a pk — a user
+    can only ever edit their own profile, never someone else's, so
+    there's nothing to look up.
+    """
     model = Profile
     fields = ["age", "height", "avatar"]
     template_name = "users/player_update.html"
@@ -68,6 +89,7 @@ class PlayerUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user.profile
 
+
 @login_required
 def profile_view(request):
     """Display the logged-in user's profile page.
@@ -75,3 +97,14 @@ def profile_view(request):
     Requires authentication — anonymous users are redirected to LOGIN_URL.
     """
     return render(request, 'users/profile.html', {'current_user': request.user})
+
+
+class UserDetailAPI(APIView):
+    """Read-only JSON endpoint for a single user, including their
+    nested profile (see UserSerializer). First DRF endpoint added to
+    the project — no permissions/auth restrictions yet.
+    """
+    def get(self, request, pk):
+        user = User.objects.get(pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)

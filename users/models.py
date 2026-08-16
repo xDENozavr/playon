@@ -5,6 +5,14 @@ from .validators import validate_age, validate_height, validate_avatar_size, val
 
 
 class UserManager(BaseUserManager):
+    """Custom manager required because User has no username field.
+
+    Django's default UserManager expects to build users from a
+    username. Since USERNAME_FIELD is "email" here, create_user()/
+    create_superuser() must be overridden to accept email instead —
+    without this, createsuperuser and User.objects.create_user()
+    wouldn't work at all.
+    """
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError("Email is required")
@@ -21,12 +29,13 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    """Custom user model, kept intentionally empty.
+    """Custom user model, authenticated by email instead of username.
 
-    Subclassing AbstractUser (instead of using Django's default User)
-    keeps the door open for future changes to authentication logic —
-    e.g. switching to email-based login — without a costly migration
-    later. All player-specific data lives on Profile instead.
+    username is dropped entirely (username = None) and email takes
+    over as USERNAME_FIELD. This means login, createsuperuser, and
+    the admin all use email as the unique identifier. All
+    player-specific data lives on Profile instead, created
+    automatically via a post_save signal (see users/signals.py).
     """
     username = None
     email = models.EmailField(unique=True)
@@ -35,6 +44,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
 
 class Profile(models.Model):
     """Player-specific data, kept separate from User.
@@ -47,7 +57,7 @@ class Profile(models.Model):
     age = models.SmallIntegerField(validators=[validate_age], blank=True, null=True, verbose_name='age')
     height = models.SmallIntegerField(validators=[validate_height], blank=True, null=True, verbose_name='height (cm)')
     phone = models.CharField(max_length=20, validators=[validate_phone], blank=True, null=True, verbose_name='phone')
-    avatar = models.ImageField(upload_to='avatars/',validators=[validate_avatar_size, validate_avatar_format],null=True, blank=True, verbose_name='avatar')
+    avatar = models.ImageField(upload_to='avatars/', validators=[validate_avatar_size, validate_avatar_format], null=True, blank=True, verbose_name='avatar')
     city = models.CharField(max_length=100, blank=True, null=True, verbose_name="city")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
@@ -57,4 +67,4 @@ class Profile(models.Model):
         verbose_name_plural = 'Profiles'
 
     def __str__(self):
-        return f"Profile of {self.user.username}"
+        return f"Profile of {self.user.email}"

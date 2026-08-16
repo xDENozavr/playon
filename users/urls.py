@@ -10,4 +10,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', views.register_view, name='register'),
     path('profile/', views.profile_view, name='profile'),
+
+    # DRF endpoints
+    path('api/users/<int:pk>/', views.UserDetailAPI.as_view(), name='user_api_detail'),
 ]

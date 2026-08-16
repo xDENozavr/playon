@@ -22,5 +22,21 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ['is_active', 'is_staff']
     search_fields = ["email", "first_name", "last_name"]
 
+    # Base UserAdmin references "username" in these — since our User
+    # has no username field, both must be overridden to use email
+    # instead, or the add/change forms in /admin/ break.
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
+
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Profile)
