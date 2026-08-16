@@ -1,0 +1,376 @@
+{% extends 'playon/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'core/css/calendar.css' %}">
+{% endblock %}
+
+{% block content %}
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div>
+        <div class="page-hero-tag">Announcements · Season 2026</div>
+        <h1 class="page-hero-title">
+          <span class="outline">CALENDAR</span><br>
+        </h1>
+      </div>
+      <div class="hero-right">
+        <div class="hero-upcoming">
+          <div class="hero-up-item">
+            <span class="hero-up-val">4</span>
+            <span class="hero-up-label">Events</span>
+          </div>
+          <div class="hero-up-item">
+            <span class="hero-up-val">3</span>
+            <span class="hero-up-label">Open registration</span>
+          </div>
+          <div class="hero-up-item">
+            <span class="hero-up-val">1</span>
+            <span class="hero-up-label">Closing soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CONTROLS BAR ══════════ -->
+  <div class="controls-bar">
+    <span class="ctrl-label">Type:</span>
+    <button class="type-btn active" data-type="all">
+      <span class="dot"></span> All
+    </button>
+    <button class="type-btn type-tournament" data-type="tournament">
+      <span class="dot"></span> Tournaments
+    </button>
+    <button class="type-btn type-open" data-type="open">
+      <span class="dot"></span> Other
+    </button>
+
+    <div class="ctrl-spacer"></div>
+
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="grid" title="Grid">⊞</button>
+      <button class="view-btn" data-view="list" title="List">≡</button>
+    </div>
+  </div>
+
+  <!-- ══════════ EVENTS ══════════ -->
+  <section class="events-section" id="events-section">
+
+    <!-- ── JUNE 2026 ── -->
+    <div class="month-group reveal" data-month="june">
+      <div class="month-title">June 2026 <span>3 Events</span></div>
+
+      <!-- Grid -->
+      <div class="events-grid">
+
+        <div class="event-card type-tournament" data-type="tournament">
+          <div class="ec-top">
+            <span class="ec-type">Tournament</span>
+          </div>
+          <div class="ec-date-block">
+            <span class="ec-day">14</span>
+            <div class="ec-month-time">
+              <span class="ec-month">June</span>
+              <span class="ec-time">10:00</span>
+            </div>
+          </div>
+          <div class="ec-title">Summer Cup<br>3×3</div>
+          <div class="ec-meta">
+            <span class="ec-meta-item"><span class="ico">📍</span> Karachuny</span>
+            <span class="ec-meta-item"><span class="ico">🏷</span> U16, U18</span>
+            <span class="ec-meta-item"><span class="ico">🏆</span> Trophy + medals</span>
+          </div>
+          <div class="ec-deadline">
+            Registration until <em>June 10</em>
+          </div>
+          <button class="ec-reg-btn"
+            data-title="Summer Cup 3×3"
+            data-type="Tournament"
+            data-date="June 14, 10:00"
+            data-place="Court in the park">
+            Enter / Register →
+          </button>
+        </div>
+
+        <div class="event-card type-tournament" data-type="tournament">
+          <div class="ec-top">
+            <span class="ec-type">Tournament</span>
+          </div>
+          <div class="ec-date-block">
+            <span class="ec-day">28</span>
+            <div class="ec-month-time">
+              <span class="ec-month">June</span>
+              <span class="ec-time">11:00</span>
+            </div>
+          </div>
+          <div class="ec-title">City Cup<br>5×5</div>
+          <div class="ec-meta">
+            <span class="ec-meta-item"><span class="ico">📍</span> Karachuny</span>
+            <span class="ec-meta-item"><span class="ico">🏷</span> U18</span>
+            <span class="ec-meta-item"><span class="ico">🏆</span> Trophy + prize money</span>
+          </div>
+          <button class="ec-reg-btn"
+            data-title="City Cup 5×5"
+            data-type="Tournament"
+            data-date="June 28, 11:00"
+            data-place="Karachuny Hall">
+            Enter / Register →
+          </button>
+        </div>
+
+        <div class="event-card type-open" data-type="open">
+          <div class="ec-top">
+            <span class="ec-type">Other</span>
+          </div>
+          <div class="ec-date-block">
+            <span class="ec-day">22</span>
+            <div class="ec-month-time">
+              <span class="ec-month">June</span>
+              <span class="ec-time">15:00</span>
+            </div>
+          </div>
+          <div class="ec-title">Open House<br>Day</div>
+          <div class="ec-meta">
+            <span class="ec-meta-item"><span class="ico">📍</span> Karachuny</span>
+            <span class="ec-meta-item"><span class="ico">🏷</span> No restrictions</span>
+            <span class="ec-meta-item"><span class="ico">🆓</span> Free</span>
+          </div>
+          <div class="ec-deadline">
+            Registration until <em>June 20</em>
+          </div>
+          <button class="ec-reg-btn"
+            data-title="League Open House Day"
+            data-type="Open event"
+            data-date="June 22, 15:00"
+            data-place="Karachuny Hall">
+            Enter / Register →
+          </button>
+        </div>
+
+      </div>
+
+      <!-- List -->
+      <div class="events-list">
+        <div class="event-list-item type-tournament" data-type="tournament">
+          <div class="eli-date"><span class="eli-day">14</span><span class="eli-mon">June</span></div>
+          <div class="eli-info">
+            <div class="eli-title-row">
+              <span class="eli-title">Summer Cup 3×3</span>
+              <span class="eli-type type-tournament">Tournament</span>
+            </div>
+            <span class="eli-sub">📍 Karachuny &nbsp;·&nbsp; U16, U18 &nbsp;·&nbsp;</span>
+          </div>
+          <div class="eli-action">
+            <span class="eli-time">10:00</span>
+            <button class="eli-btn"
+              data-title="Summer Cup 3×3"
+              data-type="Tournament"
+              data-date="June 14, 10:00"
+              data-place="Court in the park">Enter / Register</button>
+          </div>
+        </div>
+        <div class="event-list-item type-open" data-type="open">
+          <div class="eli-date"><span class="eli-day">22</span><span class="eli-mon">June</span></div>
+          <div class="eli-info">
+            <div class="eli-title-row">
+              <span class="eli-title">Open House Day</span>
+              <span class="eli-type type-open">Other</span>
+            </div>
+            <span class="eli-sub">📍 Karachuny &nbsp;·&nbsp; No restrictions &nbsp;·&nbsp; Free</span>
+          </div>
+          <div class="eli-action">
+            <span class="eli-time">15:00</span>
+            <button class="eli-btn"
+              data-title="League Open House Day"
+              data-type="Open event"
+              data-date="June 22, 15:00"
+              data-place="Karachuny Hall">Enter / Register</button>
+          </div>
+        </div>
+        <div class="event-list-item type-tournament" data-type="tournament">
+          <div class="eli-date"><span class="eli-day">28</span><span class="eli-mon">June</span></div>
+          <div class="eli-info">
+            <div class="eli-title-row">
+              <span class="eli-title">City Cup 5×5</span>
+              <span class="eli-type type-tournament">Tournament</span>
+            </div>
+            <span class="eli-sub">📍 Karachuny &nbsp;·&nbsp; U18 &nbsp;·&nbsp;</span>
+          </div>
+          <div class="eli-action">
+            <span class="eli-time">11:00</span>
+            <button class="eli-btn"
+              data-title="City Cup 5×5"
+              data-type="Tournament"
+              data-date="June 28, 11:00"
+              data-place="Karachuny Hall">Enter / Register</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AUGUST 2026 ── -->
+    <div class="month-group reveal" data-month="august">
+      <div class="month-title">August 2026 <span>1 event</span></div>
+
+      <div class="events-grid">
+
+        <div class="event-card type-tournament" data-type="tournament">
+          <div class="ec-top">
+            <span class="ec-type">Tournament</span>
+          </div>
+          <div class="ec-date-block">
+            <span class="ec-day">23</span>
+            <div class="ec-month-time">
+              <span class="ec-month">August</span>
+              <span class="ec-time">09:00</span>
+            </div>
+          </div>
+          <div class="ec-title">Open Season<br>2026 — 2027</div>
+          <div class="ec-meta">
+            <span class="ec-meta-item"><span class="ico">📍</span> Karachuny</span>
+            <span class="ec-meta-item"><span class="ico">🏷</span> U12 — U18</span>
+            <span class="ec-meta-item"><span class="ico">📅</span> Season Sep–May</span>
+          </div>
+          <div class="ec-deadline">
+            Registration from <em>July 1</em>
+          </div>
+          <button class="ec-reg-btn"
+            data-title="Open Season 2026–2027"
+            data-type="Summer season"
+            data-date="Starts August 23"
+            data-place="Karachuny Hall">
+            Enter / Register →
+          </button>
+        </div>
+
+      </div>
+
+      <div class="events-list">
+        <div class="event-list-item type-tournament" data-type="tournament">
+          <div class="eli-date"><span class="eli-day">23</span><span class="eli-mon">Aug</span></div>
+          <div class="eli-info">
+            <div class="eli-title-row">
+              <span class="eli-title">Open Season 2026–2027</span>
+              <span class="eli-type type-tournament">Tournament</span>
+            </div>
+            <span class="eli-sub">📍 Karachuny &nbsp;·&nbsp; U12–U18 &nbsp;·&nbsp; Registration from July 1</span>
+          </div>
+          <div class="eli-action">
+            <span class="eli-time">09:00</span>
+            <button class="eli-btn"
+              data-title="Open Season 2026–2027"
+              data-type="Summer season"
+              data-date="Starts August 23"
+              data-place="Karachuny Hall">Enter / Register</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════ MODAL ══════════ -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal" role="dialog" aria-modal="true">
+
+      <div class="modal-header">
+        <span class="modal-event-type" id="modal-type">—</span>
+        <span class="modal-event-title" id="modal-title">—</span>
+        <div class="modal-event-meta" id="modal-meta">—</div>
+        <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      </div>
+
+      <!-- Sign in / New application switcher -->
+      <div class="modal-tabs" id="modal-tabs">
+        <button class="modal-tab active" data-tab="register">New application</button>
+        <button class="modal-tab" data-tab="login">Already registered</button>
+      </div>
+
+      <!-- New application form -->
+      <div class="modal-body" id="modal-form-wrap">
+        <div class="form-note">
+          After registration you will receive a confirmation email. Your spot is reserved for the team once the entry fee is paid.
+        </div>
+
+        <div class="form-row">
+          <label>Team name</label>
+          <input type="text" id="f-team" placeholder="e.g. Falcons-2" autocomplete="off">
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-row">
+            <label>Captain</label>
+            <input type="text" id="f-captain" placeholder="First Last" autocomplete="off">
+          </div>
+          <div class="form-row">
+            <label>Age category</label>
+            <select id="f-age">
+              <option value="">Select</option>
+              <option>U12</option>
+              <option>U14</option>
+              <option>U16</option>
+              <option>U18</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Confirmation email</label>
+          <input type="email" id="f-email" placeholder="captain@example.com" autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <label>Phone</label>
+          <input type="tel" id="f-phone" placeholder="+380 (__) ___-__-__" autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <label>Number of players on the roster</label>
+          <select id="f-count">
+            <option>5</option><option>6</option><option>7</option>
+            <option>8</option><option>9</option><option>10</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Comment (optional)</label>
+          <textarea id="f-comment" placeholder="Special requests, questions..."></textarea>
+        </div>
+
+        <button class="form-submit" id="form-submit">Submit application →</button>
+      </div>
+
+      <!-- Login form for existing teams -->
+      <div class="modal-body" id="modal-login-wrap" style="display:none">
+        <div class="form-note">
+          Enter the details of a team you registered before to sign up for a new event.
+        </div>
+
+        <div class="form-row">
+          <label>Captain's email</label>
+          <input type="email" id="l-email" placeholder="captain@example.com" autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <label>Password</label>
+          <input type="password" id="l-pass" placeholder="••••••••" autocomplete="off">
+        </div>
+
+        <button class="form-submit" id="login-submit">Sign in and register →</button>
+      </div>
+
+      <!-- Success screen -->
+      <div class="modal-success" id="modal-success">
+        <span class="modal-success-icon">🏀</span>
+        <h3>Application accepted!</h3>
+        <p id="success-text">We'll send a confirmation to your email.<br>See you on the court!</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ JS ══════════ -->
+  <script src="{% static 'core/js/calendar.js' %}"></script>
+{% endblock %}

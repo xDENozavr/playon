@@ -17,11 +17,11 @@
   <nav>
     <div class="nav-logo">Play<span>On</span></div>
     <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Calendar</a></li>
-      <li><a href="#">Teams</a></li>
-      <li><a href="#">Clubs</a></li>
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'about' %}">About</a></li>
+      <li><a href="{% url 'calendar' %}">Calendar</a></li>
+      <li><a href="{% url 'teams' %}">Teams</a></li>
+      <li><a href="{% url 'club' %}">Clubs</a></li>
     </ul>
     {% if user.is_authenticated %}
       <!-- Logged in -->
@@ -54,9 +54,9 @@
     <div class="footer-links">
       <h4>League</h4>
       <ul>
-        <li><a href="#">Rules</a></li>
-        <li><a href="#">Calendar</a></li>
-        <li><a href="#">Clubs</a></li>
+        <li><a href="{% url 'rules' %}">Rules</a></li>
+        <li><a href="{% url 'calendar' %}">Calendar</a></li>
+        <li><a href="{% url 'club' %}">Clubs</a></li>
         <li><a href="#">Photo archive</a></li>
       </ul>
     </div>
@@ -64,7 +64,7 @@
     <div class="footer-links">
       <h4>Contact</h4>
       <ul>
-        <li><a href="#">playon@gmail.com</a></li>
+        <li><a href="mailto:playon@gmail.com">playon@gmail.com</a></li>
         <li><a href="https://www.instagram.com/playon" target="_blank">Instagram</a></li>
         <li><a href="https://t.me/PlayOnBC" target="_blank">Telegram</a></li>
       </ul>

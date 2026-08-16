@@ -1,0 +1,701 @@
+/* ── PAGE HERO ── */
+.page-hero {
+  padding: calc(72px + 32px + 4rem) 3rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 100% at 100% 50%, rgba(134,0,1,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 60% at 0% 100%, rgba(134,0,1,.08) 0%, transparent 55%);
+  pointer-events: none;
+}
+.page-hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(134,0,1,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(134,0,1,.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+  mask-image: linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%);
+}
+
+.page-hero-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.page-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--red);
+  border: 1px solid rgba(134,0,1,.5);
+  padding: .35rem 1rem .35rem .8rem;
+  margin-bottom: 1.2rem;
+  animation: fadeUp .7s ease both;
+}
+.page-hero-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+.page-hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 8vw, 9rem);
+  line-height: .88;
+  letter-spacing: .02em;
+  animation: fadeUp .7s ease both .1s;
+}
+.page-hero-title .outline {
+  -webkit-text-stroke: 2px rgba(255,255,255,.8);
+  color: transparent;
+}
+.page-hero-title .fill-red { color: var(--red); }
+
+/* Stats in the hero */
+.hero-meta {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-end;
+  animation: fadeUp .7s ease both .25s;
+  flex-shrink: 0;
+  padding-bottom: .5rem;
+}
+.hero-meta-item { text-align: center; }
+.hero-meta-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  line-height: 1;
+  color: var(--red);
+  display: block;
+  letter-spacing: .03em;
+}
+.hero-meta-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  display: block;
+  margin-top: .2rem;
+}
+
+/* ── FILTERS ── */
+.filters-bar {
+  background: rgba(255,255,255,.02);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding: 1rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  margin-right: .5rem;
+}
+
+.filter-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  background: transparent;
+  color: rgba(255,255,255,.45);
+  border: 1px solid rgba(255,255,255,.1);
+  padding: .35rem 1rem;
+  cursor: pointer;
+  transition: all .2s;
+}
+.filter-btn:hover {
+  color: var(--white);
+  border-color: rgba(255,255,255,.3);
+}
+.filter-btn.active {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
+}
+
+/* ── TEAMS GRID ── */
+.teams-section {
+  padding: 3.5rem 3rem 6rem;
+  background: var(--black);
+}
+
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.05);
+}
+
+/* ── TEAM CARD ── */
+.team-card {
+  background: var(--black);
+  padding: 2rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Spotlight on hover */
+.team-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 200px at var(--mx, 50%) var(--my, 50%), rgba(134,0,1,.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+.team-card:hover::before { opacity: 1; }
+
+/* Corner accent */
+.team-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0;
+  border-color: transparent;
+  transition: border-width .3s ease;
+}
+.team-card:hover::after {
+  border-width: 32px 32px 0 0;
+  border-top-color: var(--red);
+}
+
+.team-card:hover { background: rgba(255,255,255,.025); }
+
+/* Top row of the card */
+.tc-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tc-rank {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .85rem;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.2);
+  line-height: 1;
+}
+.tc-rank.gold   { color: #c9a84c; }
+.tc-rank.silver { color: #9ba5b0; }
+.tc-rank.bronze { color: #b07848; }
+
+/* Status badge */
+.tc-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: .22rem .7rem;
+  border: 1px solid rgba(134,0,1,.5);
+  color: var(--red);
+}
+.tc-badge.top { background: rgba(134,0,1,.12); }
+
+/* Large background number */
+.tc-bg-num {
+  position: absolute;
+  right: 1.2rem;
+  top: .8rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 7rem;
+  line-height: 1;
+  color: rgba(255,255,255,.03);
+  pointer-events: none;
+  transition: color .25s;
+  letter-spacing: -.02em;
+}
+.team-card:hover .tc-bg-num { color: rgba(134,0,1,.06); }
+
+/* Team name */
+.tc-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: .04em;
+  color: var(--white);
+  line-height: 1;
+  transition: color .2s;
+  position: relative;
+  z-index: 1;
+}
+.team-card:hover .tc-name { color: rgba(255,255,255,1); }
+
+/* Stats row */
+.tc-stats {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.tc-stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--white);
+  display: block;
+}
+.tc-stat-key {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  display: block;
+  margin-top: .1rem;
+}
+
+/* Bottom row — form + arrow */
+.tc-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.tc-form {
+  display: flex;
+  gap: 4px;
+}
+.tc-form-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+}
+.tc-form-dot.w { background: rgba(111,207,97,.8); }
+.tc-form-dot.l { background: rgba(235,87,87,.7); }
+
+.tc-arrow {
+  font-size: .8rem;
+  color: rgba(255,255,255,.2);
+  transition: color .2s, transform .2s;
+}
+.team-card:hover .tc-arrow {
+  color: var(--red);
+  transform: translateX(4px);
+}
+
+/* Animated bottom divider */
+.tc-line {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--red);
+  transition: width .4s ease;
+}
+.team-card:hover .tc-line { width: 100%; }
+
+/* ── TEAM PANEL (DRAWER) ── */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+.drawer-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(560px, 100vw);
+  background: #0c0c0c;
+  border-left: 1px solid rgba(255,255,255,.08);
+  z-index: 301;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+}
+.drawer.open { transform: translateX(0); }
+
+/* Panel header */
+.drawer-header {
+  position: sticky;
+  top: 0;
+  background: #0c0c0c;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.drawer-team-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--red);
+  display: block;
+  margin-bottom: .3rem;
+}
+.drawer-team-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: .04em;
+  color: var(--white);
+  line-height: 1;
+  display: block;
+}
+
+.drawer-close {
+  width: 42px; height: 42px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.6);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.drawer-close:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
+/* Stats in the header */
+.drawer-team-stats {
+  display: flex;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.dts-item {
+  flex: 1;
+  padding: .9rem 1rem;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+.dts-item:last-child { border-right: none; }
+.dts-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: var(--white);
+  line-height: 1;
+  display: block;
+}
+.dts-val.red { color: var(--red); }
+.dts-key {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  display: block;
+  margin-top: .2rem;
+}
+
+/* Player list */
+.drawer-body {
+  padding: 1.5rem 2rem 3rem;
+  flex: 1;
+}
+
+.drawer-section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  margin-bottom: 1rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.player-row {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: .9rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  transition: background .15s;
+  margin: 0 -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.player-row:hover { background: rgba(255,255,255,.025); }
+.player-row:last-child { border-bottom: none; }
+
+/* Player number */
+.pr-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: rgba(255,255,255,.15);
+  text-align: right;
+  transition: color .2s;
+  letter-spacing: .02em;
+}
+.player-row:hover .pr-num { color: var(--red); }
+
+.pr-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: .03em;
+  color: var(--white);
+  line-height: 1.1;
+  display: block;
+}
+.pr-pos {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  display: block;
+  margin-top: .15rem;
+}
+
+/* Player mini-stats */
+.pr-stats {
+  display: flex;
+  gap: 1rem;
+  text-align: center;
+}
+.pr-stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--white);
+  display: block;
+}
+.pr-stat-key {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .55rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.25);
+  display: block;
+}
+
+/* Captain */
+.pr-cap {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--red);
+  border: 1px solid rgba(134,0,1,.5);
+  padding: .15rem .5rem;
+  margin-left: .5rem;
+  vertical-align: middle;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger for the cards */
+.teams-grid.loaded .team-card:nth-child(1)  { animation: cardIn .4s ease both .05s; }
+.teams-grid.loaded .team-card:nth-child(2)  { animation: cardIn .4s ease both .10s; }
+.teams-grid.loaded .team-card:nth-child(3)  { animation: cardIn .4s ease both .15s; }
+.teams-grid.loaded .team-card:nth-child(4)  { animation: cardIn .4s ease both .20s; }
+.teams-grid.loaded .team-card:nth-child(5)  { animation: cardIn .4s ease both .25s; }
+.teams-grid.loaded .team-card:nth-child(6)  { animation: cardIn .4s ease both .30s; }
+.teams-grid.loaded .team-card:nth-child(7)  { animation: cardIn .4s ease both .35s; }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Player rows in the drawer appear one after another */
+.drawer.open .player-row {
+  animation: rowSlide .3s ease both;
+}
+.drawer.open .player-row:nth-child(1)  { animation-delay: .05s; }
+.drawer.open .player-row:nth-child(2)  { animation-delay: .10s; }
+.drawer.open .player-row:nth-child(3)  { animation-delay: .14s; }
+.drawer.open .player-row:nth-child(4)  { animation-delay: .18s; }
+.drawer.open .player-row:nth-child(5)  { animation-delay: .22s; }
+.drawer.open .player-row:nth-child(6)  { animation-delay: .26s; }
+.drawer.open .player-row:nth-child(7)  { animation-delay: .30s; }
+.drawer.open .player-row:nth-child(8)  { animation-delay: .34s; }
+.drawer.open .player-row:nth-child(9)  { animation-delay: .38s; }
+.drawer.open .player-row:nth-child(10) { animation-delay: .42s; }
+
+@keyframes rowSlide {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .page-hero { padding: calc(72px + 32px + 2.5rem) 1.5rem 2.5rem; }
+  .hero-meta { gap: 1.5rem; }
+  .hero-meta-val { font-size: 2rem; }
+  .filters-bar { padding: .8rem 1.5rem; gap: .6rem; }
+  .teams-section { padding: 2rem 1.5rem 4rem; }
+  .drawer-header { padding: 1.2rem 1.5rem; }
+  .drawer-body { padding: 1.2rem 1.5rem 2.5rem; }
+  .player-row { margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+  .pr-stats { gap: .6rem; }
+}
+
+/* ── FILTER — CATEGORY DROPDOWN ── */
+.filter-spacer {
+  flex: 1;
+}
+
+.filter-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.filter-select {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  background: transparent;
+  color: rgba(255,255,255,.45);
+  border: 1px solid rgba(255,255,255,.1);
+  padding: .35rem 2.2rem .35rem 1rem;
+  cursor: pointer;
+  transition: all .2s;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  min-width: 100px;
+}
+
+.filter-select:hover,
+.filter-select:focus {
+  color: var(--white);
+  border-color: rgba(255,255,255,.3);
+}
+
+/* Red accent once a specific category is selected */
+.filter-select.filtered {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
+}
+
+/* Custom arrow */
+.filter-select-arrow {
+  position: absolute;
+  right: .65rem;
+  font-size: .65rem;
+  color: rgba(255,255,255,.3);
+  pointer-events: none;
+  transition: color .2s;
+  line-height: 1;
+}
+.filter-select-wrap:hover .filter-select-arrow,
+.filter-select-wrap:focus-within .filter-select-arrow {
+  color: rgba(255,255,255,.7);
+}
+.filter-select.filtered + .filter-select-arrow {
+  color: rgba(255,255,255,.8);
+}
+
+/* Options — the browser renders these itself, but at least give them a dark background */
+.filter-select option {
+  background: #1a1a1a;
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* ── CATEGORY BADGE ON THE CARD ── */
+.tc-age-badge {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.2rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  border: 1px solid rgba(255,255,255,.1);
+  padding: .18rem .55rem;
+  z-index: 2;
+  transition: color .2s, border-color .2s;
+}
+.team-card:hover .tc-age-badge {
+  color: rgba(255,255,255,.6);
+  border-color: rgba(255,255,255,.25);
+}

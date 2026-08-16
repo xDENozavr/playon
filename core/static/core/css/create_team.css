@@ -1,0 +1,495 @@
+body { background: #060606; }
+
+.wizard-page {
+  min-height: 100vh;
+  padding: calc(72px + 2.5rem) 1.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wizard-head {
+  text-align: center;
+  max-width: 560px;
+  margin-bottom: 2.4rem;
+}
+.wizard-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  letter-spacing: .04em;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: .6rem;
+}
+.wizard-title span { color: var(--red); }
+.wizard-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .88rem; letter-spacing: .04em;
+  color: rgba(255,255,255,.35);
+}
+
+/* ── STEPPER ── */
+.stepper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 3rem;
+}
+.step {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .5rem;
+  flex: 0 0 auto;
+  position: relative;
+}
+.step-circle {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: #111;
+  border: 2px solid rgba(255,255,255,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; color: rgba(255,255,255,.3);
+  transition: all .3s;
+  flex-shrink: 0;
+}
+.step.active .step-circle {
+  border-color: var(--red);
+  background: rgba(134,0,1,.15);
+  color: var(--white);
+  box-shadow: 0 0 0 4px rgba(134,0,1,.1);
+}
+.step.done .step-circle {
+  border-color: var(--red);
+  background: var(--red);
+  color: var(--white);
+}
+.step-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .62rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(255,255,255,.25);
+  white-space: nowrap;
+  transition: color .3s;
+}
+.step.active .step-label,
+.step.done .step-label { color: rgba(255,255,255,.65); }
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,.08);
+  margin: 0 .4rem;
+  position: relative;
+  top: -12px;
+  transition: background .3s;
+}
+.step-line.filled { background: var(--red); }
+
+/* ── CARD ── */
+.wizard-card {
+  width: 100%;
+  max-width: 640px;
+  background: #0e0e0e;
+  border: 1px solid rgba(255,255,255,.07);
+  border-top: 3px solid var(--red);
+  padding: 2.2rem;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wizard-step-content { display: none; flex: 1; animation: fadeIn .3s ease both; }
+.wizard-step-content.active { display: flex; flex-direction: column; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.step-content-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: .04em;
+  color: var(--white); margin-bottom: .3rem;
+}
+.step-content-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .8rem; letter-spacing: .04em;
+  color: rgba(255,255,255,.3);
+  margin-bottom: 1.6rem;
+}
+
+.fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.fgrid.single { grid-template-columns: 1fr; }
+
+.f { display: flex; flex-direction: column; gap: .4rem; }
+.f label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .63rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+}
+.f input, .f select {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .95rem; letter-spacing: .03em;
+  padding: .72rem .9rem;
+  outline: none;
+  transition: border-color .2s, background .2s;
+  -webkit-appearance: none;
+  width: 100%;
+}
+.f input:focus, .f select:focus { border-color: var(--red); background: rgba(134,0,1,.05); }
+.f input::placeholder { color: rgba(255,255,255,.18); }
+
+/* ── ROSTER (step 3) ── */
+.wizard-roster-list { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1rem; max-height: 260px; overflow-y: auto; padding-right: .3rem; }
+.wizard-roster-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: .6rem;
+  align-items: center;
+}
+.wizard-roster-row input {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .85rem;
+  padding: .55rem .7rem;
+  outline: none;
+  width: 100%;
+  -webkit-appearance: none;
+}
+.wizard-roster-row input[type="number"] { text-align: center; }
+.wizard-roster-row input:focus { border-color: var(--red); }
+
+.w-row-remove {
+  width: 30px; height: 30px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.08);
+  color: rgba(255,255,255,.25);
+  cursor: pointer; font-size: .75rem;
+  transition: all .2s;
+}
+.w-row-remove:hover { border-color: #eb5757; color: #eb5757; }
+
+.btn-add-row {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  background: transparent;
+  border: 1px dashed rgba(255,255,255,.18);
+  color: rgba(255,255,255,.4);
+  padding: .6rem 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: all .2s;
+}
+.btn-add-row:hover { border-color: var(--red); color: var(--red); }
+
+.roster-progress {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  margin-bottom: .8rem;
+}
+.roster-progress b { font-family: 'Bebas Neue', sans-serif; color: var(--white); }
+.roster-progress.ready { color: #6fcf97; }
+.roster-progress.ready b { color: #6fcf97; }
+
+/* ── STEP 4 — Done / summary ── */
+.summary-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: rgba(134,0,1,.15);
+  border: 2px solid var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto 1.2rem;
+}
+.summary-block { text-align: center; }
+.summary-team-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: .04em;
+  color: var(--white); margin-bottom: .4rem;
+}
+.summary-rows {
+  display: flex; flex-direction: column; gap: .5rem;
+  max-width: 360px; margin: 1.4rem auto 0;
+  text-align: left;
+}
+.summary-row {
+  display: flex; justify-content: space-between;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .82rem; letter-spacing: .03em;
+  padding: .5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.summary-row span:first-child { color: rgba(255,255,255,.35); }
+.summary-row span:last-child { color: var(--white); font-weight: 600; }
+
+/* ── STEP NAVIGATION ── */
+.wizard-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 1.6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.btn-wiz-back {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .75rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.4);
+  padding: .65rem 1.4rem;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-wiz-back:hover { border-color: rgba(255,255,255,.3); color: var(--white); }
+.btn-wiz-back:disabled { opacity: 0; pointer-events: none; }
+
+#team-form {
+  display: contents;
+}
+
+.btn-wiz-next {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .75rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  background: var(--red); color: var(--white);
+  border: none; padding: .7rem 1.8rem;
+  cursor: pointer;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: background .2s;
+}
+.btn-wiz-next:hover { background: #a80002; }
+
+/* Tournament CTA (shown only on step 4) */
+.tournament-cta-wiz {
+  margin-top: 1.6rem;
+  padding: 1.4rem 1.6rem;
+  background: linear-gradient(135deg, rgba(134,0,1,.14) 0%, rgba(134,0,1,.02) 100%);
+  border: 1px solid rgba(134,0,1,.3);
+  text-align: center;
+}
+.tournament-cta-wiz p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .8rem; letter-spacing: .04em;
+  color: rgba(255,255,255,.4); margin-bottom: 1rem;
+}
+.btn-tournament-wiz {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .78rem; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase;
+  background: var(--white); color: var(--black);
+  text-decoration: none;
+  padding: .8rem 1.8rem;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: background .2s, color .2s;
+}
+.btn-tournament-wiz:hover { background: var(--red); color: var(--white); }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem;
+  background: #161616;
+  border: 1px solid rgba(255,255,255,.08);
+  border-left: 3px solid #6fcf97;
+  padding: .85rem 1.4rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .82rem; letter-spacing: .06em; color: var(--white);
+  z-index: 500;
+  transform: translateY(12px); opacity: 0;
+  transition: all .3s ease; pointer-events: none;
+}
+.toast.show { transform: none; opacity: 1; }
+
+@media (max-width: 640px) {
+  .wizard-card { padding: 1.6rem; }
+  .fgrid { grid-template-columns: 1fr; }
+  .step-label { display: none; }
+  .stepper { max-width: 100%; }
+}
+
+/* ── GAME FORMAT SWITCH (Basketball / Streetball) ── */
+.discipline-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .7rem;
+}
+.discipline-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .15rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.4);
+  padding: 1.1rem .8rem .9rem;
+  cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif;
+  transition: all .2s;
+  text-align: center;
+}
+.discipline-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: .03em;
+  color: rgba(255,255,255,.5);
+  transition: color .2s;
+}
+.discipline-text {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-top: .25rem;
+}
+.discipline-btn:hover {
+  border-color: rgba(255,255,255,.25);
+  color: rgba(255,255,255,.7);
+}
+.discipline-btn:hover .discipline-num { color: rgba(255,255,255,.8); }
+.discipline-btn.active {
+  background: rgba(134,0,1,.12);
+  border-color: var(--red);
+  color: var(--white);
+}
+.discipline-btn.active .discipline-num { color: var(--red); }
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select-trigger {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .95rem;
+  letter-spacing: .03em;
+  padding: .72rem .9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color .2s, background .2s;
+}
+.custom-select-trigger.placeholder { color: rgba(255,255,255,.35); }
+.custom-select.open .custom-select-trigger {
+  border-color: var(--red);
+  background: rgba(134,0,1,.05);
+}
+.custom-select-arrow {
+  font-size: .7rem;
+  color: rgba(255,255,255,.3);
+  transition: transform .2s;
+}
+.custom-select.open .custom-select-arrow { transform: rotate(180deg); }
+
+.custom-select-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: #161616;
+  border: 1px solid rgba(255,255,255,.1);
+  z-index: 50;
+  max-height: 220px;
+  overflow-y: auto;
+  display: none;
+  box-shadow: 0 12px 30px rgba(0,0,0,.5);
+}
+.custom-select.open .custom-select-options { display: block; }
+
+.custom-select-option {
+  padding: .65rem .9rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .9rem;
+  letter-spacing: .03em;
+  color: rgba(255,255,255,.65);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.custom-select-option:last-child { border-bottom: none; }
+.custom-select-option:hover {
+  background: rgba(134,0,1,.12);
+  color: var(--white);
+}
+.custom-select-option.selected {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.custom-select-trigger.error {
+  border-color: #eb5757;
+}
+
+/* ── FORM MESSAGES (Django messages.error / messages.success) ── */
+.form-messages {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.form-message {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .85rem;
+  letter-spacing: .03em;
+  padding: .8rem 1.2rem;
+  border-left: 3px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.03);
+  color: rgba(255,255,255,.7);
+}
+.form-message.error {
+  border-left-color: #eb5757;
+  background: rgba(235,87,87,.08);
+  color: #ff8a8a;
+}
+.form-message.success {
+  border-left-color: #6fcf97;
+  background: rgba(111,207,151,.08);
+  color: #a8e6c1;
+}
+
+/* ── CAPTAIN CONFIRMATION CARD (step 2) ── */
+.captain-confirm-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1.4rem;
+}
+.captain-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(134,0,1,.18);
+  border: 2px solid rgba(134,0,1,.45);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: var(--red);
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.captain-info { display: flex; flex-direction: column; gap: .2rem; }
+.captain-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: .03em;
+  color: var(--white);
+}
+.captain-email {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .78rem;
+  letter-spacing: .03em;
+  color: rgba(255,255,255,.35);
+}

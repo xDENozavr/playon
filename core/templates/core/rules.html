@@ -1,0 +1,214 @@
+{% extends 'playon/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'core/css/rules.css' %}">
+{% endblock %}
+
+{% block content %}
+  <!-- ══════════ HERO ══════════ -->
+  <section class="rules-hero">
+    <div class="rules-hero-inner">
+      <div class="rules-tag">Official league document</div>
+      <h1 class="rules-title">
+        <span class="fill-red">RU</span><span class="outline">LES</span>
+      </h1>
+      <p class="rules-sub">
+        The single set of rules for all PLAYON teams — basketball 5×5 and streetball 3×3,
+        age categories U12–U18. Mandatory reading before registering a team.
+      </p>
+      <div class="rules-updated">Last updated: Season 2026</div>
+    </div>
+  </section>
+
+  <!-- ══════════ LAYOUT: TOC + CONTENT ══════════ -->
+  <div class="rules-layout">
+
+    <aside class="rules-toc">
+      <div class="toc-label">Contents</div>
+      <div class="toc-list" id="toc-list">
+        <a href="#sec-general" class="toc-item active"><span class="toc-num">01</span> General provisions</a>
+        <a href="#sec-registration" class="toc-item"><span class="toc-num">02</span> Team registration</a>
+        <a href="#sec-age" class="toc-item"><span class="toc-num">03</span> Age categories</a>
+        <a href="#sec-formats" class="toc-item"><span class="toc-num">04</span> Game formats</a>
+        <a href="#sec-conduct" class="toc-item"><span class="toc-num">05</span> Fair Play and discipline</a>
+        <a href="#sec-tournaments" class="toc-item"><span class="toc-num">06</span> Tournaments and playoffs</a>
+        <a href="#sec-appeals" class="toc-item"><span class="toc-num">07</span> Appeals</a>
+      </div>
+    </aside>
+
+    <div class="rules-content">
+
+      <section class="rule-section reveal" id="sec-general">
+        <div class="rule-bg-num">01</div>
+        <div class="rule-section-head">
+          <div class="rule-eyebrow">Section 01</div>
+          <h2 class="rule-title">General provisions</h2>
+        </div>
+        <p class="rule-text">
+          These rules govern the participation of teams and players in the PLAYON city league.
+          By registering a team, the captain and all players automatically agree to the terms
+          set out in this document.
+        </p>
+        <div class="rule-list">
+          <div class="rule-item"><span class="rule-item-num">1.1</span> The league runs annually from September to May, with a summer streetball season from June to August.</div>
+          <div class="rule-item"><span class="rule-item-num">1.2</span> Any team that has registered on the website and meets the age requirements of the chosen category can join the league.</div>
+          <div class="rule-item"><span class="rule-item-num">1.3</span> The organizer reserves the right to make changes to the schedule, the referee crew, and the tournament format, with at least 7 days' prior notice.</div>
+        </div>
+        <div class="rule-callout">
+          <strong>Important:</strong> participation in the league is voluntary and free for the base season. Tournaments with a prize fund may require an entry fee — details are listed in each tournament's announcement.
+        </div>
+      </section>
+
+      <section class="rule-section reveal" id="sec-registration">
+        <div class="rule-bg-num">02</div>
+        <div class="rule-section-head">
+          <div class="rule-eyebrow">Section 02</div>
+          <h2 class="rule-title">Team registration</h2>
+        </div>
+        <p class="rule-text">
+          Teams are created through the personal account on the website. The user who registers
+          the team automatically becomes its captain.
+        </p>
+        <div class="rule-list">
+          <div class="rule-item"><span class="rule-item-num">2.1</span> The team name must be unique within the chosen age category — duplicate names are not allowed.</div>
+          <div class="rule-item"><span class="rule-item-num">2.2</span> The minimum roster for tournament participation is <strong>5 players</strong> for basketball 5×5 and <strong>3 players</strong> for streetball 3×3 (not counting substitutes).</div>
+          <div class="rule-item"><span class="rule-item-num">2.3</span> The captain is responsible for the accuracy of all players' data, including age and contact information.</div>
+          <div class="rule-item"><span class="rule-item-num">2.4</span> Changing the team captain is only possible by contacting the league administration.</div>
+        </div>
+        <div class="rule-callout warn">
+          <strong>Warning:</strong> submitting false information about a player's age may result in the team's disqualification from the tournament, with no refund of the entry fee.
+        </div>
+      </section>
+
+      <section class="rule-section reveal" id="sec-age">
+        <div class="rule-bg-num">03</div>
+        <div class="rule-section-head">
+          <div class="rule-eyebrow">Section 03</div>
+          <h2 class="rule-title">Age categories</h2>
+        </div>
+        <p class="rule-text">
+          A player is assigned to a category based on their age as of September 1 of the current
+          season. Moving up to an older category is allowed; moving down is not.
+        </p>
+        <div class="age-table-wrap">
+          <table class="age-table">
+            <thead>
+              <tr><th>Category</th><th>Player age</th><th>Year of birth (Season 2026)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>U12</td><td>up to 12 years</td><td>2014 or later</td></tr>
+              <tr><td>U14</td><td>up to 14 years</td><td>2012 or later</td></tr>
+              <tr><td>U16</td><td>up to 16 years</td><td>2010 or later</td></tr>
+              <tr><td>U18</td><td>up to 18 years</td><td>2008 or later</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="rule-section reveal" id="sec-formats">
+        <div class="rule-bg-num">04</div>
+        <div class="rule-section-head">
+          <div class="rule-eyebrow">Section 04</div>
+          <h2 class="rule-title">Game formats</h2>
+        </div>
+        <p class="rule-text">
+          The league runs matches in two formats. A team chooses its format at registration
+          and cannot change it during the current season.
+        </p>
+        <div class="format-compare">
+          <div class="format-card">
+            <div class="format-num">5×5</div>
+            <div class="format-label">Basketball</div>
+            <div class="format-details">
+              <div class="format-row"><span>Match duration</span><span>4×10 min</span></div>
+              <div class="format-row"><span>Court size</span><span>Full court</span></div>
+              <div class="format-row"><span>Players on court</span><span>5 + substitutes</span></div>
+              <div class="format-row"><span>Season</span><span>September — May</span></div>
+              <div class="format-row"><span>Officiating</span><span>2 referees</span></div>
+            </div>
+          </div>
+          <div class="format-card">
+            <div class="format-num">3×3</div>
+            <div class="format-label">Streetball</div>
+            <div class="format-details">
+              <div class="format-row"><span>Match duration</span><span>10 min / first to 21 points</span></div>
+              <div class="format-row"><span>Court size</span><span>Half court</span></div>
+              <div class="format-row"><span>Players on court</span><span>3 + 1 substitute</span></div>
+              <div class="format-row"><span>Season</span><span>June — August</span></div>
+              <div class="format-row"><span>Officiating</span><span>1 referee</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rule-section reveal" id="sec-conduct">
+        <div class="rule-bg-num">05</div>
+        <div class="rule-section-head">
+          <div class="rule-eyebrow">Section 05</div>
+          <h2 class="rule-title">Fair Play and discipline</h2>
+        </div>
+        <p class="rule-text">
+          PLAYON is a league built on respect for opponents, referees, and spectators.
+          Violating this principle is penalized regardless of the sporting outcome.
+        </p>
+        <div class="rule-list">
+          <div class="rule-item"><span class="rule-item-num">5.1</span> Insults, threats, or physical aggression toward referees, players, or spectators result in the player's immediate disqualification from the match.</div>
+          <div class="rule-item"><span class="rule-item-num">5.2</span> Three technical fouls in one season result in the player automatically missing the next match.</div>
+          <div class="rule-item"><span class="rule-item-num">5.3</span> The referee's decision on the court is final. Appeals are only possible through the process described in Section 07.</div>
+          <div class="rule-item"><span class="rule-item-num">5.4</span> The team captain is responsible for the conduct of their players and the spectators who came to support them.</div>
+        </div>
+        <div class="rule-callout danger">
+          <strong>Zero tolerance:</strong> the use of physical force outside of play results in the player's disqualification from all league competitions for at least one full season.
+        </div>
+      </section>
+
+      <section class="rule-section reveal" id="sec-tournaments">
+        <div class="rule-bg-num">06</div>
+        <div class="rule-section-head">
+          <div class="rule-eyebrow">Section 06</div>
+          <h2 class="rule-title">Tournaments and playoffs</h2>
+        </div>
+        <p class="rule-text">
+          The regular season determines team rankings for playoff qualification. The playoff
+          format depends on the number of registered teams in the category.
+        </p>
+        <div class="rule-list">
+          <div class="rule-item"><span class="rule-item-num">6.1</span> Teams that finish at the top of the regular season standings advance to the playoffs.</div>
+          <div class="rule-item"><span class="rule-item-num">6.2</span> The playoff format is single-elimination bracket.</div>
+          <div class="rule-item"><span class="rule-item-num">6.3</span> The winner receives the season trophy and medals for the entire registered roster.</div>
+          <div class="rule-item"><span class="rule-item-num">6.4</span> Registration for individual tournaments (cups, open events) happens through the Calendar page and does not depend on participation in the regular season.</div>
+        </div>
+      </section>
+
+      <section class="rule-section reveal" id="sec-appeals">
+        <div class="rule-bg-num">07</div>
+        <div class="rule-section-head">
+          <div class="rule-eyebrow">Section 07</div>
+          <h2 class="rule-title">Appeals and disputes</h2>
+        </div>
+        <p class="rule-text">
+          If a team disagrees with a referee's decision or a disciplinary penalty, it has the
+          right to file an appeal within 48 hours after the match.
+        </p>
+        <div class="rule-list">
+          <div class="rule-item"><span class="rule-item-num">7.1</span> The appeal is submitted by the team captain in writing to the league's official email address.</div>
+          <div class="rule-item"><span class="rule-item-num">7.2</span> The league committee decides on the appeal within 5 business days.</div>
+          <div class="rule-item"><span class="rule-item-num">7.3</span> The committee's decision is final and cannot be further appealed.</div>
+        </div>
+
+        <div class="appeal-box">
+          <div class="appeal-text">
+            <div class="appeal-eyebrow">Have questions?</div>
+            <div class="appeal-title">Contact the league administration</div>
+            <div class="appeal-sub">We respond within 1–2 business days</div>
+          </div>
+          <a href="mailto:playon@gmail.com" class="btn-appeal">Email playon@gmail.com →</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="{% static 'core/js/rules.js' %}"></script>
+{% endblock %}

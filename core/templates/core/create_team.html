@@ -1,0 +1,166 @@
+{% extends 'playon/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'core/css/create_team.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="wizard-page">
+
+    <div class="wizard-head">
+      <h1 class="wizard-title">Create a <span>team</span></h1>
+      <p class="wizard-sub">Three steps — and your team is in the league</p>
+    </div>
+
+    <!-- ── Messages from Django (messages.error / messages.success) ── -->
+    {% if messages %}
+      <div class="form-messages">
+        {% for message in messages %}
+          <div class="form-message {% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- STEPPER (3 steps) -->
+    <div class="stepper" id="stepper">
+      <div class="step active" data-step="1">
+        <div class="step-circle">1</div>
+        <span class="step-label">Team</span>
+      </div>
+      <div class="step-line" data-line="1"></div>
+      <div class="step" data-step="2">
+        <div class="step-circle">2</div>
+        <span class="step-label">Captain</span>
+      </div>
+      <div class="step-line" data-line="2"></div>
+      <div class="step" data-step="3">
+        <div class="step-circle">3</div>
+        <span class="step-label">Done</span>
+      </div>
+    </div>
+
+    <!-- FORM wraps all steps -->
+    <form id="team-form" method="post" action="{% url 'create_team' %}">
+      {% csrf_token %}
+
+      <div class="wizard-card">
+
+        <!-- STEP 1 — Team information -->
+        <div class="wizard-step-content active" data-content="1">
+          <div class="step-content-title">Team information</div>
+          <div class="step-content-sub">What will your team be called in the league?</div>
+
+          <div class="fgrid single">
+            <div class="f">
+              <label for="w-name">Team name</label>
+              <input type="text" id="w-name" name="name" placeholder="e.g. Hawks">
+            </div>
+          </div>
+
+          <div class="fgrid single">
+            <div class="f">
+              <label>Game format</label>
+              <div class="discipline-toggle" id="discipline-toggle">
+                <button type="button" class="discipline-btn active" data-discipline="basketball">
+                  <span class="discipline-num">5×5</span>
+                  <span class="discipline-text">Basketball</span>
+                </button>
+                <button type="button" class="discipline-btn" data-discipline="streetball">
+                  <span class="discipline-num">3×3</span>
+                  <span class="discipline-text">Streetball</span>
+                </button>
+              </div>
+              <!-- Actual field sent to the server: True = Basketball, False = Streetball -->
+              <input type="checkbox" id="w-team-type" name="team_type" value="1" checked hidden>
+            </div>
+          </div>
+
+          <div class="fgrid single">
+            <div class="f">
+              <label>Category</label>
+
+              <!-- Real select — hidden, but exists for form submission -->
+              <select id="w-category" name="category" style="display:none">
+                <option value="">Select a category</option>
+                {% for cat in categories %}
+                  <option value="{{ cat.id }}">{{ cat.category_name }}</option>
+                {% endfor %}
+              </select>
+
+              <!-- Custom visual dropdown -->
+              <div class="custom-select" id="category-custom-select">
+                <div class="custom-select-trigger placeholder" id="category-trigger">
+                  Select a category
+                  <span class="custom-select-arrow">▾</span>
+                </div>
+                <div class="custom-select-options" id="category-options">
+                  {% for cat in categories %}
+                    <div class="custom-select-option" data-value="{{ cat.id }}">{{ cat.category_name }}</div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-nav">
+            <button type="button" class="btn-wiz-back" disabled>← Back</button>
+            <button type="button" class="btn-wiz-next" data-next>Next →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2 — Captain (automatically the current user) -->
+        <div class="wizard-step-content" data-content="2">
+          <div class="step-content-title">Team captain</div>
+          <div class="step-content-sub">Your account automatically becomes the captain</div>
+
+          <div class="captain-confirm-card">
+            <div class="captain-avatar">
+              {{ request.user.first_name|slice:":1" }}{{ request.user.last_name|slice:":1" }}
+            </div>
+            <div class="captain-info">
+              <span class="captain-name">{{ request.user.first_name }} {{ request.user.last_name }}</span>
+              <span class="captain-email">{{ request.user.email }}</span>
+            </div>
+          </div>
+
+          <!-- Actual field sent to the server -->
+          <input type="hidden" name="captain" value="{{ request.user.profile.id }}">
+
+          <div class="wizard-nav">
+            <button type="button" class="btn-wiz-back" data-back>← Back</button>
+            <button type="button" class="btn-wiz-next" data-next>Next →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3 — Summary + actual submit -->
+        <div class="wizard-step-content" data-content="3">
+          <div class="summary-block">
+            <div class="summary-icon">🏀</div>
+            <div class="step-content-title" style="text-align:center">Review your details</div>
+            <div class="summary-team-name" id="summary-name">—</div>
+
+            <div class="summary-rows">
+              <div class="summary-row"><span>Game format</span><span id="summary-discipline">—</span></div>
+              <div class="summary-row"><span>Category</span><span id="summary-category">—</span></div>
+              <div class="summary-row"><span>Captain</span><span>{{ request.user.first_name }} {{ request.user.last_name }}</span></div>
+            </div>
+          </div>
+
+          <div class="wizard-nav">
+            <button type="button" class="btn-wiz-back" data-back>← Back</button>
+            <button type="submit" class="btn-wiz-next">Create team</button>
+          </div>
+        </div>
+
+      </div><!-- /.wizard-card -->
+    </form>
+
+  </div>
+
+    <script src="{% static 'core/js/create_team.js' %}"></script>
+
+{% endblock %}

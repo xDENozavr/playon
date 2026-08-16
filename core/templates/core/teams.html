@@ -1,0 +1,122 @@
+{% extends 'playon/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'core/css/teams.css' %}">
+{% endblock %}
+
+{% block content %}
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-tag">Season 2026 · City League</div>
+      <h1 class="page-hero-title">
+        <span class="outline">TEAMS</span>
+      </h1>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-val">{{ teams|length }}</span>
+          <span class="hero-meta-label">Teams</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-val">214</span>
+          <span class="hero-meta-label">Players</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-val">12</span>
+          <span class="hero-meta-label">Tournaments</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <span class="filter-label">Sort by:</span>
+    <button class="filter-btn active" data-sort="rank">By rank</button>
+    <button class="filter-btn" data-sort="wins">By wins</button>
+    <button class="filter-btn" data-sort="name">Alphabetically</button>
+
+    <div class="filter-spacer"></div>
+
+    <span class="filter-label">Category:</span>
+    <div class="filter-select-wrap">
+      <select class="filter-select" id="age-filter">
+        <option value="all">All</option>
+        {% for cat in teams_cat %}
+          <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
+        {% endfor %}
+      </select>
+      <span class="filter-select-arrow">▾</span>
+    </div>
+  </div>
+
+  <!-- ══════════ TEAMS GRID ══════════ -->
+  <section class="teams-section">
+    <div class="teams-grid" id="teams-grid">
+
+      {% for team in teams %}
+        <div class="team-card" data-team="{{ team.id }}" data-age="{% for cat in team.category.all %}{{ cat.category_name }}{% if not forloop.last %},{% endif %}{% endfor %}">
+          <span class="tc-age-badge">{% for cat in team.category.all %}{{ cat.category_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+          <div class="tc-bg-num">{{ forloop.counter }}</div>
+          <div class="tc-top">
+            <span class="tc-rank">#{{ forloop.counter }}</span>
+          </div>
+          <div class="tc-name">{{ team.name }}</div>
+          <div class="tc-stats">
+            <div class="tc-stat">
+              <span class="tc-stat-val">{{ team.wins|default:"—" }}</span>
+              <span class="tc-stat-key">Wins</span>
+            </div>
+            <div class="tc-stat">
+              <span class="tc-stat-val">{{ team.losses|default:"—" }}</span>
+              <span class="tc-stat-key">Losses</span>
+            </div>
+            <div class="tc-stat">
+              <span class="tc-stat-val">{{ team.points_avg|default:"—" }}</span>
+              <span class="tc-stat-key">Points (AVG)</span>
+            </div>
+          </div>
+          <div class="tc-bottom">
+            <div class="tc-form">
+              <div class="tc-form-dot l"></div>
+              <div class="tc-form-dot l"></div>
+              <div class="tc-form-dot w"></div>
+              <div class="tc-form-dot l"></div>
+              <div class="tc-form-dot w"></div>
+            </div>
+            <span class="tc-arrow">→</span>
+          </div>
+          <div class="tc-line"></div>
+        </div>
+      {% empty %}
+        <p style="padding: 2rem; color: rgba(255,255,255,.4);">No teams registered yet.</p>
+      {% endfor %}
+
+    </div>
+  </section>
+
+  <!-- ══════════ TEAM PANEL (DRAWER) ══════════ -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Team roster">
+
+    <div class="drawer-header">
+      <div class="drawer-header-left">
+        <span class="drawer-team-label">Team roster</span>
+        <span class="drawer-team-name" id="drawer-name">—</span>
+      </div>
+      <button class="drawer-close" id="drawer-close" aria-label="Close">✕</button>
+    </div>
+
+    <div class="drawer-team-stats" id="drawer-stats"></div>
+
+    <div class="drawer-body">
+      <div class="drawer-section-title">Players · Season 2026</div>
+      <div id="drawer-players"></div>
+    </div>
+
+  </aside>
+
+  <!-- ══════════ JS ══════════ -->
+  <script src="{% static 'core/js/teams.js' %}"></script>
+{% endblock %}
