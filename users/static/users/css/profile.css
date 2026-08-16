@@ -57,6 +57,13 @@ body { background: #080808; }
   pointer-events: none; user-select: none;
 }
 
+.pc-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .pc-avatar-wrap { position: relative; z-index: 2; }
 .pc-avatar {
   width: 88px; height: 88px;

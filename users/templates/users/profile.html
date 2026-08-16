@@ -27,7 +27,11 @@
       <div class="pc-left">
         <div class="pc-avatar-wrap">
           <div class="pc-avatar">
-            {{ current_user.first_name|first }}{{ current_user.last_name|first }}
+            {% if current_user.profile.avatar %}
+              <img src="{{ current_user.profile.avatar.url }}" alt="Avatar" class="pc-avatar-img">
+            {% else %}
+              {{ current_user.first_name|first }}{{ current_user.last_name|first }}
+            {% endif %}
             <button class="pc-avatar-btn" title="Change photo">✎</button>
           </div>
         </div>

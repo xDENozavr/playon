@@ -10,9 +10,10 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login
 from django.urls import reverse
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .serializers import UserSerializer
+from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
+from .serializers import UserSerializer, ProfileSerializer
+from .permissions import IsOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 
 def register_view(request):
@@ -99,12 +100,17 @@ def profile_view(request):
     return render(request, 'users/profile.html', {'current_user': request.user})
 
 
-class UserDetailAPI(APIView):
-    """Read-only JSON endpoint for a single user, including their
-    nested profile (see UserSerializer). First DRF endpoint added to
-    the project — no permissions/auth restrictions yet.
-    """
-    def get(self, request, pk):
-        user = User.objects.get(pk=pk)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+class UserDetailAPI(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserListAPI(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class ProfileDetailAPI(RetrieveUpdateDestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]

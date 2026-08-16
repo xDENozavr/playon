@@ -12,5 +12,7 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
 
     # DRF endpoints
+    path('api/users/', views.UserListAPI.as_view(), name='user_api_list'),
     path('api/users/<int:pk>/', views.UserDetailAPI.as_view(), name='user_api_detail'),
+    path('api/profiles/<int:pk>/', views.ProfileDetailAPI.as_view(), name='profile_api_detail'),
 ]

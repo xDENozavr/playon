@@ -4,6 +4,9 @@ from .models import TeamCategory, Club, Game, RegToTournament, Team
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 
+from .serializers import TeamCategorySerializer
+from rest_framework.viewsets import ModelViewSet
+
 
 def club(request):
     all_clubs = Club.objects.all()
@@ -83,3 +86,8 @@ def create_team(request):
 
 def rules(request):
     return render(request, 'core/rules.html')
+
+
+class TeamCategoryViewSet(ModelViewSet):
+    queryset = TeamCategory.objects.all()
+    serializer_class = TeamCategorySerializer
