@@ -1,7 +1,5 @@
 from rest_framework import serializers
 from .models import User, Profile
-from rest_framework.generics import ListAPIView
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
 
 class ProfileSerializer(serializers.ModelSerializer):
