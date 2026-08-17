@@ -3,6 +3,9 @@ from .models import News
 from core.models import Team
 from django.contrib.auth import get_user_model
 
+from rest_framework.viewsets import ReadOnlyModelViewSet
+from .serializers import NewsSerializer
+
 User = get_user_model()
 
 
@@ -37,3 +40,7 @@ def about(request):
         'players_count': get_user_count(),
     }
     return render(request, 'blog/about.html', context)
+
+class NewsViewSet(ReadOnlyModelViewSet):
+    queryset = News.objects.filter(is_published=True)
+    serializer_class = NewsSerializer
