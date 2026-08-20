@@ -18,6 +18,15 @@
       </div>
     </div>
 
+    <!-- Avatar form lives OUTSIDE the main profile form below.
+         HTML does not allow a <form> nested inside another <form> —
+         the browser silently drops the nested one when building the
+         DOM, which is why avatar-form kept coming back null. -->
+    <form method="post" action="{% url 'player_update' %}" enctype="multipart/form-data" id="avatar-form">
+      {% csrf_token %}
+      <input type="file" name="avatar" id="avatar-input" accept="image/*" hidden>
+    </form>
+
     <form method="post" action="#">
       {% csrf_token %}
 
@@ -32,7 +41,7 @@
             {% else %}
               {{ current_user.first_name|first }}{{ current_user.last_name|first }}
             {% endif %}
-            <button class="pc-avatar-btn" title="Change photo">✎</button>
+            <button type="button" class="pc-avatar-btn" title="Change photo" onclick="document.getElementById('avatar-input').click()">✎</button>
           </div>
         </div>
 
@@ -116,9 +125,6 @@
   </div>
 
   <div class="toast" id="toast">✓ Changes saved</div>
-{% endblock %}
 
   <script src="{% static 'users/js/profile.js' %}"></script>
-
-</body>
-</html>
+{% endblock %}
