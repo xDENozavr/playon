@@ -107,7 +107,8 @@
       const val = ageFilter.value;
       ageFilter.classList.toggle('filtered', val !== 'all');
       grid.querySelectorAll('.team-card').forEach(card => {
-        const show = val === 'all' || card.dataset.age === val;
+        const teamCategories = card.dataset.age.split(',');
+        const show = val === 'all' || teamCategories.includes(val);
         card.style.display = show ? '' : 'none';
       });
     });

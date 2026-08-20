@@ -22,7 +22,14 @@ class Club(models.Model):
 
 
 class TeamCategory(models.Model):
+    class Gender(models.TextChoices):
+        MALE = "male", "Male"
+        FEMALE = "female", "Female"
+
     category_name = models.CharField(max_length=20, verbose_name='category name')
+    max_age = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name='maximum player age',)
+    gender = models.CharField(max_length=10, choices=Gender.choices, blank=True, null=True, verbose_name='required gender')
+    allows_mixed_gender = models.BooleanField(default=False, verbose_name='allows mixed-gender teams')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
 
@@ -57,6 +64,31 @@ class Team(models.Model):
         for cat in categories:
             if Team.objects.filter(name__iexact=self.name, category=cat).exists():  # name__iexact — exact match, case-insensitive
                 raise ValidationError(f'A team named "{self.name}" is already registered in category {cat}!')
+
+    def check_age_compatibility(self, category):
+        """
+        Only checks the captain's age — same limitation as gender:
+        no full roster model exists yet, only a designated captain.
+        """
+        if category.max_age is None:
+            return  # категория без возрастного ограничения (Men/Women)
+        if self.captain and self.captain.age and self.captain.age > category.max_age:
+            raise ValidationError(
+                f'Captain is too old for category "{category}" (max age: {category.max_age}).'
+            )
+
+    def check_gender_compatibility(self, category):
+        """
+        Only checks the captain's gender against the category — the app
+        doesn't track full team rosters yet, only who the captain is.
+        A more complete check would need a proper team-membership model.
+        """
+        if category.allows_mixed_gender:
+            return
+        if self.captain and self.captain.gender and self.captain.gender != category.gender:
+            raise ValidationError(
+                f'Captain\'s gender does not match category "{category}" ({category.gender}).'
+            )
 
     class Meta:
         verbose_name = 'Team'
