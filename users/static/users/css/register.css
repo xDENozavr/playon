@@ -591,3 +591,44 @@
   .auth-form-wrap,
   .auth-success { padding: 1.2rem 1.4rem 2.5rem; }
 }
+
+
+.field input[type="date"] {
+  color-scheme: dark;
+}
+
+.field select {
+  width: 100%;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .95rem;
+  letter-spacing: .04em;
+  padding: .75rem 2.8rem .75rem 1rem;
+  outline: none;
+  transition: border-color .2s, background .2s;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.field select:focus {
+  border-color: var(--red);
+  background: rgba(134,0,1,.05);
+}
+.field select option {
+  background: #1a1a1a;
+  color: var(--white);
+}
+
+/* Custom dropdown arrow for select, since appearance:none removes the native one */
+.field-wrap:has(select)::after {
+  content: '▾';
+  position: absolute;
+  right: .9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.3);
+  pointer-events: none;
+  font-size: .8rem;
+}
