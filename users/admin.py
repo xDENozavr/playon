@@ -13,6 +13,7 @@ class ProfileInline(admin.StackedInline):
     extra = 0
     can_delete = False
     verbose_name_plural = "Profile"
+    readonly_fields = ["age"]
 
 
 class CustomUserAdmin(UserAdmin):
@@ -38,5 +39,8 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
 
+class ProfileAdmin(admin.ModelAdmin):
+    readonly_fields = ["age"]
+
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Profile)
+admin.site.register(Profile, ProfileAdmin)
