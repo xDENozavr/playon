@@ -22,6 +22,9 @@ def register_view(request):
     Returns JsonResponse instead of redirect() because the form
     is submitted with fetch(), which expects a JSON response.
     """
+    if request.user.is_authenticated:
+        return redirect('profile')
+
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -29,11 +32,13 @@ def register_view(request):
 
             # Profile is created automatically by the post_save signal
             # (see users/signals.py) as soon as form.save() creates the
-            # User. phone/city live on RegisterForm, not on the User
-            # model, so they don't come through form.save() — we fill
-            # them in on the already-existing profile here.
+            # User. phone, city, birth_date, and gender live on RegisterForm,
+            # not on the User model, so they don't come through form.save() —
+            # we fill them in on the already-existing profile here.
             user.profile.phone = form.cleaned_data.get('phone')
             user.profile.city = form.cleaned_data.get('city')
+            user.profile.birth_date = form.cleaned_data.get('birth_date')
+            user.profile.gender = form.cleaned_data.get('gender')
             user.profile.save()
 
             # Log the user in right after registration so they land on
@@ -83,7 +88,7 @@ class PlayerUpdateView(LoginRequiredMixin, UpdateView):
     there's nothing to look up.
     """
     model = Profile
-    fields = ["age", "height", "avatar"]
+    fields = ["height", "avatar", "phone"]
     template_name = "users/player_update.html"
     success_url = reverse_lazy("profile")
 
