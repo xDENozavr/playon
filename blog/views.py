@@ -8,6 +8,15 @@ from .serializers import NewsSerializer
 
 User = get_user_model()
 
+def get_player_estimate():
+    """
+    Estimated player count based on team composition — the app
+    doesn't track full team rosters, so this approximates headcount
+    from team_type instead of counting individual players.
+    """
+    basketball_count = Team.objects.filter(team_type=True).count()
+    streetball_count = Team.objects.filter(team_type=False).count()
+    return basketball_count * 12 + streetball_count * 4
 
 def get_teams_count():
     teams_count = Team.objects.count()
@@ -27,7 +36,7 @@ def index(request):
     all_news = News.objects.filter(is_published=True)
     context = {
         'teams_count': get_teams_count(),
-        'players_count': get_user_count(),
+        'players_amount': get_player_estimate(),
         'news': all_news,
     }
     return render(request, 'blog/index.html', context)
@@ -37,7 +46,7 @@ def about(request):
     """About page: same league stats as the home page, no news."""
     context = {
         'teams_count': get_teams_count(),
-        'players_count': get_user_count(),
+        'players_amount': get_player_estimate(),
     }
     return render(request, 'blog/about.html', context)
 

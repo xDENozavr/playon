@@ -9,9 +9,15 @@ from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 
 
 def club(request):
-    all_clubs = Club.objects.all()
+    all_clubs = Club.objects.all().order_by('district')
+    coaches_count = Club.objects.values('coach_name').distinct().count()
+    all_districts = Club.objects.values('district').distinct().count()
+
+
     context = {
         'clubs': all_clubs,
+        'coaches': coaches_count,
+        'districts': all_districts,
     }
     return render(request, 'core/sections.html', context)
 
@@ -23,9 +29,15 @@ def calendar(request):
 def teams(request):
     all_teams = Team.objects.all()
     all_teams_cat = TeamCategory.objects.all()
+
+    basketball_count = Team.objects.filter(team_type=True).count()
+    streetball_count = Team.objects.filter(team_type=False).count()
+    estimated_players = basketball_count * 12 + streetball_count * 4
+
     context = {
         'teams': all_teams,
         'teams_cat': all_teams_cat,
+        'players_amount': estimated_players,
     }
     return render(request, 'core/teams.html', context)
 
