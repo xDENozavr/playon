@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
-from .validators import validate_age, validate_height, validate_avatar_size, validate_avatar_format, validate_phone
-
+from .validators import validate_height, validate_avatar_size, validate_avatar_format, validate_phone
+from datetime import date
 
 class UserManager(BaseUserManager):
     """Custom manager required because User has no username field.
@@ -58,7 +58,7 @@ class Profile(models.Model):
         MALE = "male", "Male"
         FEMALE = "female", "Female"
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', verbose_name='profile')
-    age = models.SmallIntegerField(validators=[validate_age], blank=True, null=True, verbose_name='age')
+    birth_date = models.DateField(blank=True, null=True, verbose_name='date of birth')
     height = models.SmallIntegerField(validators=[validate_height], blank=True, null=True, verbose_name='height (cm)')
     phone = models.CharField(max_length=20, validators=[validate_phone], blank=True, null=True, verbose_name='phone')
     avatar = models.ImageField(upload_to='avatars/', validators=[validate_avatar_size, validate_avatar_format], null=True, blank=True, verbose_name='avatar')
@@ -66,6 +66,18 @@ class Profile(models.Model):
     gender = models.CharField(max_length=10, choices=Gender.choices, blank=True, null=True, verbose_name='gender')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
+
+    @property
+    def age(self):
+        """Computed from birth_date instead of stored directly, so it
+        stays accurate automatically instead of needing manual updates
+        every year."""
+        if not self.birth_date:
+            return None
+        today = date.today()
+        return today.year - self.birth_date.year - (
+                (today.month, today.day) < (self.birth_date.month, self.birth_date.day)
+        )
 
     class Meta:
         verbose_name = 'Profile'

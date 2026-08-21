@@ -2,16 +2,6 @@ from django.core.exceptions import ValidationError
 from PIL import Image
 import re
 
-# Validation for Profile
-def validate_age(value):
-    """Reject unrealistic ages.
-
-    Lower bound matches the league's junior division minimum (8 y/o);
-    upper bound is a sanity check, not a hard biological limit.
-    """
-    if value < 8 or value >= 100:
-        raise ValidationError("Outside the age group")
-
 
 def validate_height(value):
     """Reject unrealistic heights (stored in centimeters)."""

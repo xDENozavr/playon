@@ -71,7 +71,7 @@ class Team(models.Model):
         no full roster model exists yet, only a designated captain.
         """
         if category.max_age is None:
-            return  # категория без возрастного ограничения (Men/Women)
+            return
         if self.captain and self.captain.age and self.captain.age > category.max_age:
             raise ValidationError(
                 f'Captain is too old for category "{category}" (max age: {category.max_age}).'
