@@ -423,3 +423,14 @@
   .sections-main { padding: 2rem 1.5rem 4rem; }
   .sections-grid { grid-template-columns: 1fr; }
 }
+
+.sc-map {
+  height: 180px;
+  width: 100%;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+
+/* Leaflet needs explicit tile visibility overrides for dark theme compatibility */
+.sc-map .leaflet-tile-pane {
+  filter: grayscale(0.3) invert(0.9) contrast(0.9);
+}

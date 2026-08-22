@@ -10,6 +10,7 @@ router.register('api/games', views.GameViewSet, basename='game')
 
 urlpatterns = [
     path('clubs/', views.club, name='club'),
+    path('clubs/<int:pk>/', views.club_detail, name='club_detail'),
     path('calendar/', views.calendar, name='calendar'),
     path('teams/', views.teams, name='teams'),
     path('teams/create/', views.create_team, name='create_team'),

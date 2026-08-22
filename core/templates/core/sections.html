@@ -68,8 +68,9 @@
                   <a class="sc-coach-phone" href="tel:{{ club.main_phone_number }}">{{ club.main_phone_number }}</a>
                 </div>
               </div>
+
               <div class="sc-footer">
-                <a href="section-dynamo-a.html" class="sc-btn">Learn more</a>
+                <a href="{% url 'club_detail' club.id %}" class="sc-btn">Learn more</a>
               </div>
             </div>
           {% endfor %}

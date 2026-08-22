@@ -1,0 +1,115 @@
+/* ── CLUB DETAIL PAGE ── */
+.club-detail-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: calc(72px + 3rem) 2rem 5rem;
+}
+
+.club-detail-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  letter-spacing: .03em;
+  color: var(--white);
+  line-height: 1.05;
+  margin: 1rem 0 .5rem;
+}
+
+.club-detail-address {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 2.5rem;
+}
+
+/* Coach + contacts row */
+.club-detail-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.06);
+  padding: 1.4rem 1.8rem;
+}
+
+.club-detail-coach {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Reuse sc-coach-avatar/info/name/role tokens from sections.css so
+   this page stays visually consistent with the clubs list. */
+
+.club-detail-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  text-align: right;
+}
+.club-detail-contacts a {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: .05em;
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+  transition: color .2s;
+}
+.club-detail-contacts a:hover {
+  color: var(--red);
+}
+
+/* Map */
+.club-detail-map {
+  height: 320px;
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.06);
+  margin-top: 2rem;
+}
+.club-detail-map .leaflet-tile-pane {
+  filter: grayscale(0.3) invert(0.9) contrast(0.9);
+}
+
+/* Breadcrumb — reuses the same pattern as profile-breadcrumb */
+.profile-breadcrumb {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 1.5rem;
+}
+.profile-breadcrumb a {
+  color: rgba(255,255,255,.3);
+  text-decoration: none;
+  transition: color .2s;
+}
+.profile-breadcrumb a:hover {
+  color: var(--white);
+}
+.profile-breadcrumb .sep {
+  color: rgba(255,255,255,.15);
+}
+.profile-breadcrumb strong {
+  color: var(--white);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .club-detail-page {
+    padding: calc(68px + 2rem) 1.5rem 3.5rem;
+  }
+  .club-detail-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .club-detail-contacts {
+    text-align: left;
+  }
+}
