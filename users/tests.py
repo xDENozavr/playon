@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 from .models import User, Profile
+from rest_framework.test import APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class RegisterViewTests(TestCase):
@@ -13,6 +15,8 @@ class RegisterViewTests(TestCase):
             'password2': 'StrongPass123!',
             'phone': '+380671234567',
             'city': 'Mannheim',
+            'birth_date': '2000-01-01',
+            'gender': 'male',
         })
         self.assertEqual(response.status_code, 200)
         self.assertTrue(User.objects.filter(email='alex@example.com').exists())
@@ -127,3 +131,58 @@ class UserAdminTests(TestCase):
             'profile-MAX_NUM_FORMS': '1',
         })
         self.assertTrue(User.objects.filter(email='newuser@example.com').exists())
+
+
+class ProfileAPIPermissionTests(TestCase):
+    """Tests the exact scenario we manually verified through Postman
+    earlier — JWT auth combined with IsOwnerOrReadOnly permissions.
+    """
+
+    def setUp(self):
+        self.owner = User.objects.create_user(email='owner@example.com', password='StrongPass123!')
+        self.other = User.objects.create_user(email='other@example.com', password='StrongPass123!')
+        self.client = APIClient()
+
+    def test_anonymous_cannot_access_profile_api(self):
+        # No token attached at all — IsAuthenticated should block this
+        # before IsOwnerOrReadOnly is even checked.
+        response = self.client.get(f'/playon/users/api/profiles/{self.owner.profile.id}/')
+        self.assertEqual(response.status_code, 401)
+
+    def test_owner_can_view_own_profile(self):
+        token = str(RefreshToken.for_user(self.owner).access_token)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.get(f'/playon/users/api/profiles/{self.owner.profile.id}/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_other_user_can_view_someone_elses_profile(self):
+        # Reading someone else's profile is allowed — IsOwnerOrReadOnly
+        # only restricts writes, not reads.
+        token = str(RefreshToken.for_user(self.other).access_token)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.get(f'/playon/users/api/profiles/{self.owner.profile.id}/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_other_user_cannot_edit_profile(self):
+        # This is the exact case that failed through the Browsable API
+        # earlier — now verified cleanly through a real 403.
+        token = str(RefreshToken.for_user(self.other).access_token)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.patch(
+            f'/playon/users/api/profiles/{self.owner.profile.id}/',
+            {'city': 'Berlin'},
+            format='json'
+        )
+        self.assertEqual(response.status_code, 403)
+
+    def test_owner_can_edit_own_profile(self):
+        token = str(RefreshToken.for_user(self.owner).access_token)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.patch(
+            f'/playon/users/api/profiles/{self.owner.profile.id}/',
+            {'city': 'Berlin'},
+            format='json'
+        )
+        self.assertEqual(response.status_code, 200)
+        self.owner.profile.refresh_from_db()
+        self.assertEqual(self.owner.profile.city, 'Berlin')
