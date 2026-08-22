@@ -1,0 +1,26 @@
+{% extends 'playon/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'blog/css/news_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+  <article class="news-detail-page">
+
+    <div class="news-detail-hero">
+      {% if news_item.image %}
+        <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" class="news-detail-img">
+      {% endif %}
+    </div>
+
+    <div class="news-detail-body">
+      <div class="news-detail-date">{{ news_item.created_at|date:"d M Y" }}</div>
+      <h1 class="news-detail-title">{{ news_item.title }}</h1>
+      <div class="news-detail-text">{{ news_item.text_content|linebreaks }}</div>
+
+      <a href="{% url 'index' %}" class="news-detail-back">← Back to news</a>
+    </div>
+
+  </article>
+{% endblock %}
