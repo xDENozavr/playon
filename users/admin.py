@@ -40,6 +40,9 @@ class CustomUserAdmin(UserAdmin):
     )
 
 class ProfileAdmin(admin.ModelAdmin):
+    list_display = ["user", "gender", "age", "city", "phone"]
+    list_filter = ["gender", "city"]
+    search_fields = ["city"]
     readonly_fields = ["age"]
 
 admin.site.register(User, CustomUserAdmin)
