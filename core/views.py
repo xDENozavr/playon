@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .models import TeamCategory, Club, Game, RegToTournament, Team
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
 
 from .serializers import ClubSerializer, TeamCategorySerializer, TeamSerializer, GameSerializer
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
@@ -27,7 +28,7 @@ def calendar(request):
 
 
 def teams(request):
-    all_teams = Team.objects.all()
+    all_teams = Team.objects.select_related('captain').prefetch_related('category').all()
     all_teams_cat = TeamCategory.objects.all()
 
     basketball_count = Team.objects.filter(team_type=True).count()
@@ -118,3 +119,12 @@ class TeamViewSet(ReadOnlyModelViewSet):
 class GameViewSet(ReadOnlyModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+
+
+def club_detail(request, pk):
+    """Single club page."""
+    club_item = get_object_or_404(Club, pk=pk)
+    context = {
+        'club': club_item,
+    }
+    return render(request, 'core/club_detail.html', context)

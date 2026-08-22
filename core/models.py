@@ -95,7 +95,7 @@ class Team(models.Model):
         verbose_name_plural = 'Teams'
 
     def __str__(self):
-        return f'{"Basketball " if self.team_type else "Streetball "}Team: {self.name}. Captain: {self.captain if self.captain else "currently vacant"} '
+        return f'{self.name}'
 
 
 class Game(models.Model):
@@ -125,8 +125,8 @@ class RegToTournament(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
 
     class Meta:
-        verbose_name = 'Tournament registration'
-        verbose_name_plural = 'Tournament registrations'
+        verbose_name = 'Registration'
+        verbose_name_plural = 'Registrations'
 
     def __str__(self):
         return f'Tournament: {self.tournament_name}. ({self.date}). Team = {self.team}'

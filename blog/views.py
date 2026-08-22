@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from .models import News
-from core.models import Team
+from core.models import Team, Club
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from .serializers import NewsSerializer
@@ -23,6 +24,11 @@ def get_teams_count():
     return teams_count
 
 
+def get_clubs_count():
+    clubs_count = Club.objects.count()
+    return clubs_count
+
+
 def get_user_count():
     # Counts ALL users, not specifically "players" — there's no
     # separate role/permission split yet, so every registered account
@@ -37,6 +43,7 @@ def index(request):
     context = {
         'teams_count': get_teams_count(),
         'players_amount': get_player_estimate(),
+        'clubs_count': get_clubs_count(),
         'news': all_news,
     }
     return render(request, 'blog/index.html', context)
@@ -47,9 +54,20 @@ def about(request):
     context = {
         'teams_count': get_teams_count(),
         'players_amount': get_player_estimate(),
+        'clubs_count': get_clubs_count(),
     }
     return render(request, 'blog/about.html', context)
 
 class NewsViewSet(ReadOnlyModelViewSet):
     queryset = News.objects.filter(is_published=True)
     serializer_class = NewsSerializer
+
+def news_detail(request, pk):
+    """Single news article page."""
+    news_item = get_object_or_404(News, pk=pk, is_published=True)
+    context = {
+        'teams_count': get_teams_count(),
+        'players_count': get_player_estimate(),
+        'news_item': news_item,
+    }
+    return render(request, 'blog/news_detail.html', context)
