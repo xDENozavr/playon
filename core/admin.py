@@ -42,9 +42,9 @@ class TeamAdmin(admin.ModelAdmin):
     get_categories.short_description = "Categories"
 
 class RegToTournamentAdmin(admin.ModelAdmin):
-    list_display = ["team", "tournament_name", "date", "is_paid"]
-    list_filter = ["tournament_name", "is_paid"]
-    search_fields = ["team__name"]
+    list_display = ["team", "event", "is_paid"]
+    list_filter = ["is_paid"]
+    search_fields = ["team__name", "event__title"]
 
 admin.site.register(Club, ClubAdmin)
 admin.site.register(TeamCategory, TeamCategoryAdmin)

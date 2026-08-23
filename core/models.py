@@ -116,9 +116,33 @@ class Game(models.Model):
         return f'{self.team1} : {self.team2} - {self.points1} : {self.points2}'
 
 
+class Event(models.Model):
+    class EventType(models.TextChoices):
+        TOURNAMENT = "tournament", "Tournament"
+        OTHER = "other", "Other"
+
+    title = models.CharField(max_length=200, verbose_name='title')
+    event_type = models.CharField(max_length=20, choices=EventType.choices, verbose_name='event type')
+    category = models.ForeignKey('TeamCategory', on_delete=models.PROTECT, related_name='events', verbose_name='category')
+    date = models.DateField(verbose_name='event date')
+    time = models.TimeField(verbose_name='event time')
+    location = models.ForeignKey('Club', on_delete=models.SET_NULL, null=True, blank=True, related_name='events', verbose_name='location')
+    registration_deadline = models.DateTimeField(verbose_name='registration deadline')
+    max_teams = models.PositiveSmallIntegerField(default=16, verbose_name='max teams')
+    description = models.TextField(blank=True, verbose_name='description')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='updated at')
+
+    class Meta:
+        verbose_name = 'Event'
+        verbose_name_plural = 'Events'
+        ordering = ['date']
+
+    def __str__(self):
+        return f'{self.title} ({self.date})'
+
 class RegToTournament(models.Model):
-    date = models.DateField(verbose_name='tournament date')
-    tournament_name = models.CharField(max_length=100, verbose_name='tournament name')
+    event = models.ForeignKey('Event', on_delete=models.PROTECT, related_name='registrations', verbose_name='event')
     is_paid = models.BooleanField(default=False, verbose_name='payment status')
     team = models.ForeignKey('Team', on_delete=models.PROTECT, related_name='team_registrations', verbose_name='team')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
@@ -127,6 +151,7 @@ class RegToTournament(models.Model):
     class Meta:
         verbose_name = 'Registration'
         verbose_name_plural = 'Registrations'
+        unique_together = ('event', 'team')
 
     def __str__(self):
-        return f'Tournament: {self.tournament_name}. ({self.date}). Team = {self.team}'
+        return f'{self.team} → {self.event}'
