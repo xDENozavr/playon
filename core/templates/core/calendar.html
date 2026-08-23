@@ -18,15 +18,11 @@
       <div class="hero-right">
         <div class="hero-upcoming">
           <div class="hero-up-item">
-            <span class="hero-up-val">4</span>
+            <span class="hero-up-val">{{ total_events }}</span>
             <span class="hero-up-label">Events</span>
           </div>
           <div class="hero-up-item">
-            <span class="hero-up-val">3</span>
-            <span class="hero-up-label">Open registration</span>
-          </div>
-          <div class="hero-up-item">
-            <span class="hero-up-val">1</span>
+            <span class="hero-up-val">{{ closing_soon }}</span>
             <span class="hero-up-label">Closing soon</span>
           </div>
         </div>
@@ -43,7 +39,7 @@
     <button class="type-btn type-tournament" data-type="tournament">
       <span class="dot"></span> Tournaments
     </button>
-    <button class="type-btn type-open" data-type="open">
+    <button class="type-btn" data-type="other">
       <span class="dot"></span> Other
     </button>
 
@@ -64,208 +60,67 @@
 
       <!-- Grid -->
       <div class="events-grid">
-
-        <div class="event-card type-tournament" data-type="tournament">
-          <div class="ec-top">
-            <span class="ec-type">Tournament</span>
-          </div>
-          <div class="ec-date-block">
-            <span class="ec-day">14</span>
-            <div class="ec-month-time">
-              <span class="ec-month">June</span>
-              <span class="ec-time">10:00</span>
+        {% for event in events %}
+          <div class="event-card type-{{ event.event_type }}" data-type="{{ event.event_type }}">
+            <div class="ec-top">
+              <span class="ec-type">{{ event.get_event_type_display }}</span>
             </div>
-          </div>
-          <div class="ec-title">Summer Cup<br>3×3</div>
-          <div class="ec-meta">
-            <span class="ec-meta-item"><span class="ico">📍</span> Karachuny</span>
-            <span class="ec-meta-item"><span class="ico">🏷</span> U16, U18</span>
-            <span class="ec-meta-item"><span class="ico">🏆</span> Trophy + medals</span>
-          </div>
-          <div class="ec-deadline">
-            Registration until <em>June 10</em>
-          </div>
-          <button class="ec-reg-btn"
-            data-title="Summer Cup 3×3"
-            data-type="Tournament"
-            data-date="June 14, 10:00"
-            data-place="Court in the park">
-            Enter / Register →
-          </button>
-        </div>
-
-        <div class="event-card type-tournament" data-type="tournament">
-          <div class="ec-top">
-            <span class="ec-type">Tournament</span>
-          </div>
-          <div class="ec-date-block">
-            <span class="ec-day">28</span>
-            <div class="ec-month-time">
-              <span class="ec-month">June</span>
-              <span class="ec-time">11:00</span>
+            <div class="ec-date-block">
+              <span class="ec-day">{{ event.date|date:"d" }}</span>
+              <div class="ec-month-time">
+                <span class="ec-month">{{ event.date|date:"F" }}</span>
+                <span class="ec-time">{{ event.time|time:"H:i" }}</span>
+              </div>
             </div>
-          </div>
-          <div class="ec-title">City Cup<br>5×5</div>
-          <div class="ec-meta">
-            <span class="ec-meta-item"><span class="ico">📍</span> Karachuny</span>
-            <span class="ec-meta-item"><span class="ico">🏷</span> U18</span>
-            <span class="ec-meta-item"><span class="ico">🏆</span> Trophy + prize money</span>
-          </div>
-          <button class="ec-reg-btn"
-            data-title="City Cup 5×5"
-            data-type="Tournament"
-            data-date="June 28, 11:00"
-            data-place="Karachuny Hall">
-            Enter / Register →
-          </button>
-        </div>
-
-        <div class="event-card type-open" data-type="open">
-          <div class="ec-top">
-            <span class="ec-type">Other</span>
-          </div>
-          <div class="ec-date-block">
-            <span class="ec-day">22</span>
-            <div class="ec-month-time">
-              <span class="ec-month">June</span>
-              <span class="ec-time">15:00</span>
+            <div class="ec-title">{{ event.title }}</div>
+            <div class="ec-meta">
+              <span class="ec-meta-item"><span class="ico">📍</span> {{ event.location.district|default:"TBA" }}</span>
+              <span class="ec-meta-item"><span class="ico">🏷</span> {{ event.category.category_name }}</span>
+              <span class="ec-meta-item"><span class="ico">👥</span> Max {{ event.max_teams }} teams</span>
             </div>
+            <div class="ec-deadline">
+              Registration until <em>{{ event.registration_deadline|date:"F d" }}</em>
+            </div>
+            <button class="ec-reg-btn"
+              data-title="{{ event.title }}"
+              data-type="{{ event.get_event_type_display }}"
+              data-date="{{ event.date|date:"F d" }}, {{ event.time|time:"H:i" }}"
+              data-place="{{ event.location.address|default:'TBA' }}">
+              Enter / Register →
+            </button>
           </div>
-          <div class="ec-title">Open House<br>Day</div>
-          <div class="ec-meta">
-            <span class="ec-meta-item"><span class="ico">📍</span> Karachuny</span>
-            <span class="ec-meta-item"><span class="ico">🏷</span> No restrictions</span>
-            <span class="ec-meta-item"><span class="ico">🆓</span> Free</span>
-          </div>
-          <div class="ec-deadline">
-            Registration until <em>June 20</em>
-          </div>
-          <button class="ec-reg-btn"
-            data-title="League Open House Day"
-            data-type="Open event"
-            data-date="June 22, 15:00"
-            data-place="Karachuny Hall">
-            Enter / Register →
-          </button>
-        </div>
-
+        {% empty %}
+          <p style="padding: 2rem; color: rgba(255,255,255,.4);">No upcoming events yet.</p>
+        {% endfor %}
       </div>
 
       <!-- List -->
       <div class="events-list">
-        <div class="event-list-item type-tournament" data-type="tournament">
-          <div class="eli-date"><span class="eli-day">14</span><span class="eli-mon">June</span></div>
-          <div class="eli-info">
-            <div class="eli-title-row">
-              <span class="eli-title">Summer Cup 3×3</span>
-              <span class="eli-type type-tournament">Tournament</span>
+        {% for event in events %}
+          <div class="event-list-item type-{{ event.event_type }}" data-type="{{ event.event_type }}">
+            <div class="eli-date">
+              <span class="eli-day">{{ event.date|date:"d" }}</span>
+              <span class="eli-mon">{{ event.date|date:"F" }}</span>
             </div>
-            <span class="eli-sub">📍 Karachuny &nbsp;·&nbsp; U16, U18 &nbsp;·&nbsp;</span>
-          </div>
-          <div class="eli-action">
-            <span class="eli-time">10:00</span>
-            <button class="eli-btn"
-              data-title="Summer Cup 3×3"
-              data-type="Tournament"
-              data-date="June 14, 10:00"
-              data-place="Court in the park">Enter / Register</button>
-          </div>
-        </div>
-        <div class="event-list-item type-open" data-type="open">
-          <div class="eli-date"><span class="eli-day">22</span><span class="eli-mon">June</span></div>
-          <div class="eli-info">
-            <div class="eli-title-row">
-              <span class="eli-title">Open House Day</span>
-              <span class="eli-type type-open">Other</span>
+            <div class="eli-info">
+              <div class="eli-title-row">
+                <span class="eli-title">{{ event.title }}</span>
+                <span class="eli-type type-{{ event.event_type }}">{{ event.get_event_type_display }}</span>
+              </div>
+              <span class="eli-sub">📍 {{ event.location.district|default:"TBA" }} &nbsp;·&nbsp; {{ event.category.category_name }} &nbsp;·&nbsp; Max {{ event.max_teams }} teams</span>
             </div>
-            <span class="eli-sub">📍 Karachuny &nbsp;·&nbsp; No restrictions &nbsp;·&nbsp; Free</span>
-          </div>
-          <div class="eli-action">
-            <span class="eli-time">15:00</span>
-            <button class="eli-btn"
-              data-title="League Open House Day"
-              data-type="Open event"
-              data-date="June 22, 15:00"
-              data-place="Karachuny Hall">Enter / Register</button>
-          </div>
-        </div>
-        <div class="event-list-item type-tournament" data-type="tournament">
-          <div class="eli-date"><span class="eli-day">28</span><span class="eli-mon">June</span></div>
-          <div class="eli-info">
-            <div class="eli-title-row">
-              <span class="eli-title">City Cup 5×5</span>
-              <span class="eli-type type-tournament">Tournament</span>
-            </div>
-            <span class="eli-sub">📍 Karachuny &nbsp;·&nbsp; U18 &nbsp;·&nbsp;</span>
-          </div>
-          <div class="eli-action">
-            <span class="eli-time">11:00</span>
-            <button class="eli-btn"
-              data-title="City Cup 5×5"
-              data-type="Tournament"
-              data-date="June 28, 11:00"
-              data-place="Karachuny Hall">Enter / Register</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── AUGUST 2026 ── -->
-    <div class="month-group reveal" data-month="august">
-      <div class="month-title">August 2026 <span>1 event</span></div>
-
-      <div class="events-grid">
-
-        <div class="event-card type-tournament" data-type="tournament">
-          <div class="ec-top">
-            <span class="ec-type">Tournament</span>
-          </div>
-          <div class="ec-date-block">
-            <span class="ec-day">23</span>
-            <div class="ec-month-time">
-              <span class="ec-month">August</span>
-              <span class="ec-time">09:00</span>
+            <div class="eli-action">
+              <span class="eli-time">{{ event.time|time:"H:i" }}</span>
+              <button class="eli-btn"
+                data-title="{{ event.title }}"
+                data-type="{{ event.get_event_type_display }}"
+                data-date="{{ event.date|date:"F d" }}, {{ event.time|time:"H:i" }}"
+                data-place="{{ event.location.address|default:'TBA' }}">Enter / Register</button>
             </div>
           </div>
-          <div class="ec-title">Open Season<br>2026 — 2027</div>
-          <div class="ec-meta">
-            <span class="ec-meta-item"><span class="ico">📍</span> Karachuny</span>
-            <span class="ec-meta-item"><span class="ico">🏷</span> U12 — U18</span>
-            <span class="ec-meta-item"><span class="ico">📅</span> Season Sep–May</span>
-          </div>
-          <div class="ec-deadline">
-            Registration from <em>July 1</em>
-          </div>
-          <button class="ec-reg-btn"
-            data-title="Open Season 2026–2027"
-            data-type="Summer season"
-            data-date="Starts August 23"
-            data-place="Karachuny Hall">
-            Enter / Register →
-          </button>
-        </div>
-
-      </div>
-
-      <div class="events-list">
-        <div class="event-list-item type-tournament" data-type="tournament">
-          <div class="eli-date"><span class="eli-day">23</span><span class="eli-mon">Aug</span></div>
-          <div class="eli-info">
-            <div class="eli-title-row">
-              <span class="eli-title">Open Season 2026–2027</span>
-              <span class="eli-type type-tournament">Tournament</span>
-            </div>
-            <span class="eli-sub">📍 Karachuny &nbsp;·&nbsp; U12–U18 &nbsp;·&nbsp; Registration from July 1</span>
-          </div>
-          <div class="eli-action">
-            <span class="eli-time">09:00</span>
-            <button class="eli-btn"
-              data-title="Open Season 2026–2027"
-              data-type="Summer season"
-              data-date="Starts August 23"
-              data-place="Karachuny Hall">Enter / Register</button>
-          </div>
-        </div>
+        {% empty %}
+          <p style="padding: 2rem; color: rgba(255,255,255,.4);">No upcoming events yet.</p>
+        {% endfor %}
       </div>
     </div>
 

@@ -404,7 +404,7 @@ body.view-list  .events-list { display: block; }
 
 /* TYPE COLORS */
 .type-tournament { --type-color: #f2c94c; }
-.type-open     { --type-color: #56ccf2; }
+.type-other     { --type-color: #56ccf2; }
 
 /* REGISTRATION MODAL */
 .modal-overlay {

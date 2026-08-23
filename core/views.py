@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import TeamCategory, Club, Game, RegToTournament, Team
+from .models import TeamCategory, Club, Game, Event, Team
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
@@ -8,6 +8,8 @@ from django.shortcuts import get_object_or_404
 from .serializers import ClubSerializer, TeamCategorySerializer, TeamSerializer, GameSerializer
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 
+from django.utils import timezone
+from datetime import timedelta
 
 def club(request):
     all_clubs = Club.objects.all().order_by('district')
@@ -24,7 +26,16 @@ def club(request):
 
 
 def calendar(request):
-    return render(request, 'core/calendar.html')
+    all_events = Event.objects.select_related('category', 'location').order_by('date')
+    total_events = all_events.count()
+    closing_soon = all_events.filter(registration_deadline__gte=timezone.now(), registration_deadline__lte=timezone.now() + timedelta(days=3)).count()
+
+    context = {
+        'events': all_events,
+        'total_events': total_events,
+        'closing_soon': closing_soon,
+    }
+    return render(request, 'core/calendar.html', context)
 
 
 def teams(request):
