@@ -515,3 +515,69 @@ tbody td {
   display: block;
   flex: 0 0 calc(33.33% - 1rem);  /* та же ширина, что раньше была у .news-card */
 }
+
+/* ── TOP TEAMS (index page) ── */
+.top-teams-section {
+  padding: 3rem;
+  background: rgba(255,255,255,.02);
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.top-teams-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  letter-spacing: .02em;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+.top-teams-list {
+    display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.top-team-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: .9rem 1.4rem;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.06);
+  transition: border-color .2s, background .2s;
+}
+.top-team-row:hover {
+  border-color: rgba(134,0,1,.35);
+  background: rgba(255,255,255,.035);
+}
+
+.top-team-rank {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: .02em;
+  color: var(--red);
+  min-width: 44px;
+}
+
+.top-team-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: .03em;
+  color: var(--white);
+  flex: 1;
+}
+
+.top-team-stats {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .85rem;
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.45);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .top-teams-section {
+    padding: 2rem 1.5rem;
+  }
+}

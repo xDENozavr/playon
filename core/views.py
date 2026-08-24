@@ -4,6 +4,7 @@ from .models import TeamCategory, Club, Game, Event, Team
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
+from django.db.models import Count, Q, F
 
 from .serializers import ClubSerializer, TeamCategorySerializer, TeamSerializer, GameSerializer
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
@@ -39,7 +40,26 @@ def calendar(request):
 
 
 def teams(request):
-    all_teams = Team.objects.select_related('captain').prefetch_related('category').all()
+    all_teams = (
+        Team.objects.select_related('captain')
+        .prefetch_related('category')
+        .annotate(
+            computed_wins=Count(
+                'games_as_team1',
+                filter=Q(games_as_team1__is_finished=True, games_as_team1__points1__gt=F('games_as_team1__points2'))
+            ) + Count(
+                'games_as_team2',
+                filter=Q(games_as_team2__is_finished=True, games_as_team2__points2__gt=F('games_as_team2__points1'))
+            ),
+            computed_losses=Count(
+                'games_as_team1',
+                filter=Q(games_as_team1__is_finished=True, games_as_team1__points1__lt=F('games_as_team1__points2'))
+            ) + Count(
+                'games_as_team2',
+                filter=Q(games_as_team2__is_finished=True, games_as_team2__points2__lt=F('games_as_team2__points1'))
+            )
+        )
+    )
     all_teams_cat = TeamCategory.objects.all()
 
     basketball_count = Team.objects.filter(team_type=True).count()

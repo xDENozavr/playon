@@ -61,16 +61,12 @@
           <div class="tc-name">{{ team.name }}</div>
           <div class="tc-stats">
             <div class="tc-stat">
-              <span class="tc-stat-val">{{ team.wins|default:"—" }}</span>
+              <span class="tc-stat-val">{{ team.computed_wins|default:"—" }}</span>
               <span class="tc-stat-key">Wins</span>
             </div>
             <div class="tc-stat">
-              <span class="tc-stat-val">{{ team.losses|default:"—" }}</span>
+              <span class="tc-stat-val">{{ team.computed_losses|default:"—" }}</span>
               <span class="tc-stat-key">Losses</span>
-            </div>
-            <div class="tc-stat">
-              <span class="tc-stat-val">{{ team.points_avg|default:"—" }}</span>
-              <span class="tc-stat-key">Points (AVG)</span>
             </div>
           </div>
           <div class="tc-bottom">

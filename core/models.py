@@ -90,6 +90,19 @@ class Team(models.Model):
                 f'Captain\'s gender does not match category "{category}" ({category.gender}).'
             )
 
+    @property
+    def wins(self):
+        """Count of matches this team won, computed from Game records."""
+        wins_as_team1 = Game.objects.filter(team1=self, is_finished=True, points1__gt=models.F('points2')).count()
+        wins_as_team2 = Game.objects.filter(team2=self, is_finished=True, points2__gt=models.F('points1')).count()
+        return wins_as_team1 + wins_as_team2
+
+    @property
+    def losses(self):
+        losses_as_team1 = Game.objects.filter(team1=self, is_finished=True, points1__lt=models.F('points2')).count()
+        losses_as_team2 = Game.objects.filter(team2=self, is_finished=True, points2__lt=models.F('points1')).count()
+        return losses_as_team1 + losses_as_team2
+
     class Meta:
         verbose_name = 'Team'
         verbose_name_plural = 'Teams'

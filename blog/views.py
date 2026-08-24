@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from .models import News
-from core.models import Team, Club
+from core.models import Team, Club, TeamCategory, Game
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from django.db.models import Count, Q, F
 
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from .serializers import NewsSerializer
@@ -40,11 +41,46 @@ def get_user_count():
 def index(request):
     """Home page: latest published news plus league stats for the hero."""
     all_news = News.objects.filter(is_published=True)
+    men_category = TeamCategory.objects.filter(gender='male').first()
+    top_teams = []
+    if men_category:
+        top_teams = (
+            Team.objects.filter(category=men_category)
+            .annotate(
+                computed_wins=Count(
+                    'games_as_team1',
+                    filter=Q(games_as_team1__is_finished=True,
+                             games_as_team1__points1__gt=F('games_as_team1__points2')),
+                    distinct=True
+                ) + Count(
+                    'games_as_team2',
+                    filter=Q(games_as_team2__is_finished=True,
+                             games_as_team2__points2__gt=F('games_as_team2__points1')),
+                    distinct=True
+                ),
+                computed_losses=Count(
+                    'games_as_team1',
+                    filter=Q(games_as_team1__is_finished=True,
+                             games_as_team1__points1__lt=F('games_as_team1__points2')),
+                    distinct=True
+                ) + Count(
+                    'games_as_team2',
+                    filter=Q(games_as_team2__is_finished=True,
+                             games_as_team2__points2__lt=F('games_as_team2__points1')),
+                    distinct=True
+                )
+            )
+            .order_by('-computed_wins', 'computed_losses')[:10]
+        )
+    games_played = Game.objects.filter(is_finished=True).count()
+
     context = {
         'teams_count': get_teams_count(),
         'players_amount': get_player_estimate(),
         'clubs_count': get_clubs_count(),
         'news': all_news,
+        'top_teams': top_teams,
+        'games_played': games_played,
     }
     return render(request, 'blog/index.html', context)
 
