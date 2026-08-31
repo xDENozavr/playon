@@ -33,7 +33,7 @@ def register_view(request):
             # Profile is created automatically by the post_save signal
             # (see users/signals.py) as soon as form.save() creates the
             # User. phone, city, birth_date, and gender live on RegisterForm,
-            # not on the User model, so they don't come through form.save() —
+            # not on the User model, so they don't come through form.save() -
             # we fill them in on the already-existing profile here.
             user.profile.phone = form.cleaned_data.get('phone')
             user.profile.city = form.cleaned_data.get('city')
@@ -58,7 +58,7 @@ def login_view(request):
     """Handle user login via AJAX form submission (see register.js).
 
     The login form on the frontend collects an email, but Django's
-    authenticate() always names its credential argument "username" —
+    authenticate() always names its credential argument "username" -
     that's just the parameter name. Since USERNAME_FIELD is set to
     "email" on the User model, Django compares it against email under
     the hood.
@@ -74,7 +74,7 @@ def login_view(request):
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid email or password'})
     else:
-        # No separate login page — /login/ and /register/ share the same
+        # No separate login page - /login/ and /register/ share the same
         # template (with tabs), so a GET request here just sends the
         # user to the page that actually renders it.
         return redirect('register')
@@ -83,7 +83,7 @@ def login_view(request):
 class PlayerUpdateView(LoginRequiredMixin, UpdateView):
     """Edit the logged-in user's own profile (age, height, avatar).
 
-    get_object() is overridden so the URL never needs a pk — a user
+    get_object() is overridden so the URL never needs a pk - a user
     can only ever edit their own profile, never someone else's, so
     there's nothing to look up.
     """
@@ -100,7 +100,7 @@ class PlayerUpdateView(LoginRequiredMixin, UpdateView):
 def profile_view(request):
     """Display the logged-in user's profile page.
 
-    Requires authentication — anonymous users are redirected to LOGIN_URL.
+    Requires authentication - anonymous users are redirected to LOGIN_URL.
     """
     return render(request, 'users/profile.html', {'current_user': request.user})
 

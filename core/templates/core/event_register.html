@@ -1,0 +1,60 @@
+{% extends 'playon/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'core/css/calendar.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/event_register.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div>
+        <div class="page-hero-tag">Register a team</div>
+        <h1 class="page-hero-title">
+          <span class="outline">{{ event.title }}</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="event-register-section">
+    <div class="event-register-card">
+
+      <div class="event-register-meta">
+        <span>📅 {{ event.date|date:"F d, Y" }}, {{ event.time|time:"H:i" }}</span>
+        <span>📍 {{ event.location.district|default:"TBA" }}</span>
+        <span>🏷 {{ event.category.category_name }}</span>
+      </div>
+
+      {% if messages %}
+        <div class="form-messages">
+          {% for message in messages %}
+            <div class="form-message {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if user_teams %}
+        <form method="post" action="{% url 'register_for_event' event.id %}">
+          {% csrf_token %}
+          <div class="form-row">
+            <label for="team-select">Select your team</label>
+            <select id="team-select" name="team">
+              {% for team in user_teams %}
+                <option value="{{ team.id }}">{{ team.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <button type="submit" class="btn-register">Register team →</button>
+        </form>
+      {% else %}
+        <p class="no-teams-note">
+          You don't captain any teams yet. <a href="{% url 'create_team' %}">Create a team</a> first to register for events.
+        </p>
+      {% endif %}
+
+      <a href="{% url 'calendar' %}" class="back-link">← Back to calendar</a>
+    </div>
+  </section>
+{% endblock %}

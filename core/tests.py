@@ -9,7 +9,7 @@ User = get_user_model()
 
 class TeamUniquenessTests(TestCase):
     """Tests for Team.check_category_uniqueness() called directly on
-    the model — no HTTP layer involved. CreateTeamViewTests below
+    the model - no HTTP layer involved. CreateTeamViewTests below
     covers the same rule through the actual view/form.
     """
     def setUp(self):
@@ -33,7 +33,7 @@ class TeamUniquenessTests(TestCase):
 
     def test_same_name_in_different_category_is_allowed(self):
         # Confirms the intentional design: uniqueness is scoped per
-        # category, not global — a team can share a name with another
+        # category, not global - a team can share a name with another
         # team as long as they're in different categories.
         new_team = Team(name="Falcons", team_type=True)
         try:
@@ -53,7 +53,7 @@ class CreateTeamViewTests(TestCase):
     def setUp(self):
         self.category = TeamCategory.objects.create(category_name="U16")
         self.user = User.objects.create_user(email="captain@example.com", password="StrongPass123!")
-        # self.user.profile exists already — created automatically by
+        # self.user.profile exists already - created automatically by
         # the post_save signal on User (see users/signals.py).
 
     def test_anonymous_cannot_access_create_team(self):
@@ -79,7 +79,7 @@ class CreateTeamViewTests(TestCase):
         self.assertFalse(Team.objects.filter(name='').exists())
 
     def test_duplicate_team_name_is_rejected(self):
-        # End-to-end version of TeamUniquenessTests above — confirms
+        # End-to-end version of TeamUniquenessTests above - confirms
         # the ValidationError raised in the model actually prevents
         # a second row from being saved through the real view/form.
         self.client.login(email="captain@example.com", password="StrongPass123!")

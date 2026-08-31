@@ -44,12 +44,12 @@ class TeamCategory(models.Model):
 class Team(models.Model):
     team_type = models.BooleanField(verbose_name='team type (basketball / streetball)')
     name = models.CharField(max_length=50, verbose_name='team name')
-    # ManyToMany, not ForeignKey — a team can play in more than one
+    # ManyToMany, not ForeignKey - a team can play in more than one
     # category (e.g. a U16 team taking part in a U18 tournament), so
     # uniqueness of the name is checked per category, not globally
     # (see check_category_uniqueness below).
     category = models.ManyToManyField('TeamCategory', related_name='teams', verbose_name='categories')
-    # SET_NULL so that if the player is deleted, the team isn't removed —
+    # SET_NULL so that if the player is deleted, the team isn't removed -
     # it just ends up without a captain instead.
     captain = models.ForeignKey('users.Profile', on_delete=models.SET_NULL, blank=True, null=True, related_name='captain_of_teams', verbose_name='captain')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
@@ -62,12 +62,12 @@ class Team(models.Model):
         logic on the site.
         """
         for cat in categories:
-            if Team.objects.filter(name__iexact=self.name, category=cat).exists():  # name__iexact — exact match, case-insensitive
+            if Team.objects.filter(name__iexact=self.name, category=cat).exists():  # name__iexact - exact match, case-insensitive
                 raise ValidationError(f'A team named "{self.name}" is already registered in category {cat}!')
 
     def check_age_compatibility(self, category):
         """
-        Only checks the captain's age — same limitation as gender:
+        Only checks the captain's age - same limitation as gender:
         no full roster model exists yet, only a designated captain.
         """
         if category.max_age is None:
@@ -79,7 +79,7 @@ class Team(models.Model):
 
     def check_gender_compatibility(self, category):
         """
-        Only checks the captain's gender against the category — the app
+        Only checks the captain's gender against the category - the app
         doesn't track full team rosters yet, only who the captain is.
         A more complete check would need a proper team-membership model.
         """

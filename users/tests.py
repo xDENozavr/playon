@@ -21,7 +21,7 @@ class RegisterViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(User.objects.filter(email='alex@example.com').exists())
 
-        # Profile should exist too — created by the post_save signal,
+        # Profile should exist too - created by the post_save signal,
         # then filled in with phone/city inside register_view.
         user = User.objects.get(email='alex@example.com')
         self.assertTrue(Profile.objects.filter(user=user).exists())
@@ -41,7 +41,7 @@ class RegisterViewTests(TestCase):
 
 class LoginViewTests(TestCase):
     def setUp(self):
-        # Profile doesn't need to be created manually here — the
+        # Profile doesn't need to be created manually here - the
         # post_save signal on User handles it automatically.
         self.user = User.objects.create_user(
             email='alex@example.com',
@@ -71,7 +71,7 @@ class LoginViewTests(TestCase):
         })
 
     def test_login_get_redirects_to_register(self):
-        # /login/ and /register/ share the same template — GET here
+        # /login/ and /register/ share the same template - GET here
         # just redirects rather than rendering its own page.
         response = self.client.get(reverse('login'))
         self.assertRedirects(response, reverse('register'))
@@ -97,7 +97,7 @@ class ProfileViewTests(TestCase):
 class UserAdminTests(TestCase):
     """These exist because UserAdmin's default fieldsets/add_fieldsets
     reference "username", which our User model doesn't have. That
-    breaks the admin add/change pages specifically — not covered by
+    breaks the admin add/change pages specifically - not covered by
     any of the auth-flow tests above, since those never touch /admin/.
     """
     def setUp(self):
@@ -121,7 +121,7 @@ class UserAdminTests(TestCase):
             'email': 'newuser@example.com',
             'password1': 'StrongPass123!',
             'password2': 'StrongPass123!',
-            # Required by ProfileInline (it's a formset under the hood) —
+            # Required by ProfileInline (it's a formset under the hood) -
             # the real admin page injects these via the inline's
             # management form automatically; a raw POST in a test has to
             # supply them manually.
@@ -135,7 +135,7 @@ class UserAdminTests(TestCase):
 
 class ProfileAPIPermissionTests(TestCase):
     """Tests the exact scenario we manually verified through Postman
-    earlier — JWT auth combined with IsOwnerOrReadOnly permissions.
+    earlier - JWT auth combined with IsOwnerOrReadOnly permissions.
     """
 
     def setUp(self):
@@ -144,7 +144,7 @@ class ProfileAPIPermissionTests(TestCase):
         self.client = APIClient()
 
     def test_anonymous_cannot_access_profile_api(self):
-        # No token attached at all — IsAuthenticated should block this
+        # No token attached at all - IsAuthenticated should block this
         # before IsOwnerOrReadOnly is even checked.
         response = self.client.get(f'/playon/users/api/profiles/{self.owner.profile.id}/')
         self.assertEqual(response.status_code, 401)
@@ -156,7 +156,7 @@ class ProfileAPIPermissionTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_other_user_can_view_someone_elses_profile(self):
-        # Reading someone else's profile is allowed — IsOwnerOrReadOnly
+        # Reading someone else's profile is allowed - IsOwnerOrReadOnly
         # only restricts writes, not reads.
         token = str(RefreshToken.for_user(self.other).access_token)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
@@ -165,7 +165,7 @@ class ProfileAPIPermissionTests(TestCase):
 
     def test_other_user_cannot_edit_profile(self):
         # This is the exact case that failed through the Browsable API
-        # earlier — now verified cleanly through a real 403.
+        # earlier - now verified cleanly through a real 403.
         token = str(RefreshToken.for_user(self.other).access_token)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         response = self.client.patch(

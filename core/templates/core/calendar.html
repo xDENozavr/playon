@@ -81,13 +81,9 @@
             <div class="ec-deadline">
               Registration until <em>{{ event.registration_deadline|date:"F d" }}</em>
             </div>
-            <button class="ec-reg-btn"
-              data-title="{{ event.title }}"
-              data-type="{{ event.get_event_type_display }}"
-              data-date="{{ event.date|date:"F d" }}, {{ event.time|time:"H:i" }}"
-              data-place="{{ event.location.address|default:'TBA' }}">
+            <a href="{% url 'register_for_event' event.id %}" class="ec-reg-btn">
               Enter / Register →
-            </button>
+            </a>
           </div>
         {% empty %}
           <p style="padding: 2rem; color: rgba(255,255,255,.4);">No upcoming events yet.</p>
@@ -111,11 +107,7 @@
             </div>
             <div class="eli-action">
               <span class="eli-time">{{ event.time|time:"H:i" }}</span>
-              <button class="eli-btn"
-                data-title="{{ event.title }}"
-                data-type="{{ event.get_event_type_display }}"
-                data-date="{{ event.date|date:"F d" }}, {{ event.time|time:"H:i" }}"
-                data-place="{{ event.location.address|default:'TBA' }}">Enter / Register</button>
+              <a href="{% url 'register_for_event' event.id %}" class="eli-btn">Enter / Register</a>
             </div>
           </div>
         {% empty %}
@@ -131,9 +123,9 @@
     <div class="modal" id="modal" role="dialog" aria-modal="true">
 
       <div class="modal-header">
-        <span class="modal-event-type" id="modal-type">—</span>
-        <span class="modal-event-title" id="modal-title">—</span>
-        <div class="modal-event-meta" id="modal-meta">—</div>
+        <span class="modal-event-type" id="modal-type">-</span>
+        <span class="modal-event-title" id="modal-title">-</span>
+        <div class="modal-event-meta" id="modal-meta">-</div>
         <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
       </div>
 
@@ -226,6 +218,4 @@
     </div>
   </div>
 
-  <!-- ══════════ JS ══════════ -->
-  <script src="{% static 'core/js/calendar.js' %}"></script>
 {% endblock %}

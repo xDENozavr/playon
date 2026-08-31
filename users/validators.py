@@ -20,7 +20,7 @@ def validate_avatar_format(value):
     """Reject anything that isn't actually a JPEG/PNG image.
 
     We open the file with Pillow instead of trusting the filename
-    extension — a renamed file (e.g. malicious.exe -> photo.jpg)
+    extension - a renamed file (e.g. malicious.exe -> photo.jpg)
     would otherwise pass a naive extension check.
     """
     allowed_formats = ["JPEG", "PNG"]

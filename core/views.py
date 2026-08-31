@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import TeamCategory, Club, Game, Event, Team
+from .models import TeamCategory, Club, Game, Event, Team, RegToTournament
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
@@ -104,12 +104,14 @@ def create_team(request):
             )
 
             # Raises ValidationError if a team with this name already
-            # exists in the chosen category — caught below.
+            # exists in the chosen category - caught below.
             new_team.check_category_uniqueness([category_obj])
+            new_team.check_gender_compatibility(category_obj)
+            new_team.check_age_compatibility(category_obj)
             new_team.save()
 
             # category is ManyToMany, so it can only be set AFTER the
-            # team has a primary key — hence this comes after save().
+            # team has a primary key - hence this comes after save().
             new_team.category.set([category_obj])
 
             messages.success(request, f'Team "{name}" was created successfully!')
@@ -120,7 +122,8 @@ def create_team(request):
             return redirect('create_team')
 
         except ValidationError as e:
-            # Raised by check_category_uniqueness() above when the
+            # Raised by check_category_uniqueness() check_gender_compatibility(),
+            # or check_age_compatibility() above when the
             # team name is already taken in this category.
             messages.error(request, e.message)
             return redirect('create_team')
@@ -159,3 +162,33 @@ def club_detail(request, pk):
         'club': club_item,
     }
     return render(request, 'core/club_detail.html', context)
+
+@login_required
+def register_for_event(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    user_teams = Team.objects.filter(captain=request.user.profile)
+
+    if request.method == 'POST':
+        team_id = request.POST.get('team')
+        team = get_object_or_404(Team, pk=team_id, captain=request.user.profile)
+
+        try:
+            team.check_gender_compatibility(event.category)
+            team.check_age_compatibility(event.category)
+        except ValidationError as e:
+            messages.error(request, e.message)
+            return redirect('register_for_event', event_id=event.id)
+
+        if RegToTournament.objects.filter(event=event, team=team).exists():
+            messages.error(request, f'"{team.name}" is already registered for this event.')
+            return redirect('calendar')
+
+        RegToTournament.objects.create(event=event, team=team)
+        messages.success(request, f'"{team.name}" has been registered for "{event.title}"!')
+        return redirect('calendar')
+
+    context = {
+        'event': event,
+        'user_teams': user_teams,
+    }
+    return render(request, 'core/event_register.html', context)

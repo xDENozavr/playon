@@ -7,7 +7,7 @@ class RegisterForm(UserCreationForm):
 
     phone, city, birth_date, and gender are declared here directly
     rather than through Meta.fields, because they belong to the
-    Profile model, not User — Meta.fields can only reference fields
+    Profile model, not User - Meta.fields can only reference fields
     of Meta.model (User). The view is responsible for pulling these
     out of cleaned_data and saving them to Profile manually
     (see register_view).

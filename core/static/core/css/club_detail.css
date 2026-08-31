@@ -72,7 +72,7 @@
   filter: grayscale(0.3) invert(0.9) contrast(0.9);
 }
 
-/* Breadcrumb — reuses the same pattern as profile-breadcrumb */
+/* Breadcrumb - reuses the same pattern as profile-breadcrumb */
 .profile-breadcrumb {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: .7rem;

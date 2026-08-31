@@ -10,7 +10,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # Nested serializer, not a plain field — without this, "profile"
+    # Nested serializer, not a plain field - without this, "profile"
     # wouldn't serialize at all: it's a reverse OneToOne relation
     # (via related_name="profile" on Profile.user), not a field that
     # lives on User itself, so Meta.fields alone can't pick it up.

@@ -15,4 +15,5 @@ urlpatterns = [
     path('teams/', views.teams, name='teams'),
     path('teams/create/', views.create_team, name='create_team'),
     path('rules/', views.rules, name='rules'),
+    path('calendar/<int:event_id>/register/', views.register_for_event, name='register_for_event'),
 ] + router.urls

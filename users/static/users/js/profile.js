@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Cancel — reset fields
+  // Cancel - reset fields
   const originals = {};
   document.querySelectorAll('.pc-tab-content input:not([disabled])').forEach(inp => {
     originals[inp.id] = inp.value;
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Avatar — open file picker via the pencil button, auto-submit on selection
+  // Avatar - open file picker via the pencil button, auto-submit on selection
   const avatarInput = document.getElementById('avatar-input');
   if (avatarInput) {
     avatarInput.addEventListener('change', function() {

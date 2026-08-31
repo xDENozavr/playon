@@ -1,0 +1,145 @@
+/* ── EVENT REGISTER PAGE ── */
+.event-register-section {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+}
+
+.event-register-card {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 2.2rem;
+}
+
+.event-register-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .95rem;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+/* ── FORM MESSAGES ── */
+.form-messages {
+  margin-bottom: 1.5rem;
+}
+
+.form-message {
+  padding: .8rem 1rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .95rem;
+  margin-bottom: .6rem;
+  border-left: 3px solid;
+}
+
+.form-message.error {
+  background: rgba(134,0,1,.1);
+  border-color: var(--red);
+  color: #ff9d9d;
+}
+
+.form-message.success {
+  background: rgba(0,134,60,.1);
+  border-color: #2f9e44;
+  color: #8ce6a8;
+}
+
+/* ── FORM ── */
+.form-row {
+  margin-bottom: 1.5rem;
+}
+
+.form-row label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-bottom: .5rem;
+}
+
+.form-row select {
+  width: 100%;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.12);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  padding: .8rem 1rem;
+  outline: none;
+}
+
+.form-row select:focus {
+  border-color: var(--red);
+}
+
+.btn-register {
+  width: 100%;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 1rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.btn-register:hover {
+  background: #a30002;
+}
+
+/* ── NO TEAMS NOTE ── */
+.no-teams-note {
+  font-family: 'Barlow', sans-serif;
+  color: rgba(255,255,255,.6);
+  line-height: 1.6;
+}
+
+.no-teams-note a {
+  color: var(--red);
+  text-decoration: underline;
+}
+
+/* ── BACK LINK ── */
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.back-link:hover {
+  color: var(--white);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 576px) {
+  .event-register-section {
+    padding: 2rem 1.2rem 3.5rem;
+  }
+
+  .event-register-card {
+    padding: 1.5rem;
+  }
+
+  .event-register-meta {
+    flex-direction: column;
+    gap: .5rem;
+  }
+}

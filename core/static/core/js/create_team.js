@@ -89,9 +89,9 @@ document.querySelectorAll('[data-back]').forEach(btn => {
 /* ── Summary on the last step ── */
 function updateSummary() {
   document.getElementById('summary-name').textContent =
-    document.getElementById('w-name').value.trim() || '—';
+    document.getElementById('w-name').value.trim() || '-';
   document.getElementById('summary-discipline').textContent =
     selectedDiscipline === 'streetball' ? 'Streetball 3×3' : 'Basketball 5×5';
   document.getElementById('summary-category').textContent =
-    trigger.textContent.trim() || '—';
+    trigger.textContent.trim() || '-';
 }

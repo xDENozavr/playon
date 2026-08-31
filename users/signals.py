@@ -5,7 +5,7 @@ from .models import User, Profile
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
-    """Automatically create a Profile whenever a new User is created —
+    """Automatically create a Profile whenever a new User is created -
     covers registration through the site, createsuperuser, shell, etc.,
     not just the register_view flow.
     """

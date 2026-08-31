@@ -141,7 +141,7 @@ if (btnRegister) {
       .then(response => {
         if (response.status === 'success') {
           const name = document.getElementById('r-firstname')?.value.trim() || '';
-          showSuccess(`${name}, your account has been created! Check your inbox — we've sent a confirmation email.`);
+          showSuccess(`${name}, your account has been created! Check your inbox - we've sent a confirmation email.`);
 
           // Redirect after 2 seconds
           setTimeout(() => {

@@ -61,11 +61,11 @@
           <div class="tc-name">{{ team.name }}</div>
           <div class="tc-stats">
             <div class="tc-stat">
-              <span class="tc-stat-val">{{ team.computed_wins|default:"—" }}</span>
+              <span class="tc-stat-val">{{ team.computed_wins|default:"-" }}</span>
               <span class="tc-stat-key">Wins</span>
             </div>
             <div class="tc-stat">
-              <span class="tc-stat-val">{{ team.computed_losses|default:"—" }}</span>
+              <span class="tc-stat-val">{{ team.computed_losses|default:"-" }}</span>
               <span class="tc-stat-key">Losses</span>
             </div>
           </div>
@@ -95,7 +95,7 @@
     <div class="drawer-header">
       <div class="drawer-header-left">
         <span class="drawer-team-label">Team roster</span>
-        <span class="drawer-team-name" id="drawer-name">—</span>
+        <span class="drawer-team-name" id="drawer-name">-</span>
       </div>
       <button class="drawer-close" id="drawer-close" aria-label="Close">✕</button>
     </div>

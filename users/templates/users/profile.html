@@ -19,7 +19,7 @@
     </div>
 
     <!-- Avatar form lives OUTSIDE the main profile form below.
-         HTML does not allow a <form> nested inside another <form> —
+         HTML does not allow a <form> nested inside another <form> -
          the browser silently drops the nested one when building the
          DOM, which is why avatar-form kept coming back null. -->
     <form method="post" action="{% url 'player_update' %}" enctype="multipart/form-data" id="avatar-form">
@@ -88,7 +88,7 @@
             <div class="edit-field">
               <label for="f-gender">Gender</label>
               <div class="edit-field-wrap">
-                <input type="text" id="f-gender" value="{{ current_user.profile.get_gender_display|default:'—' }}" disabled>
+                <input type="text" id="f-gender" value="{{ current_user.profile.get_gender_display|default:'-' }}" disabled>
               </div>
             </div>
 <!--            <div class="edit-field">-->

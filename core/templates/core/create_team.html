@@ -11,7 +11,7 @@
 
     <div class="wizard-head">
       <h1 class="wizard-title">Create a <span>team</span></h1>
-      <p class="wizard-sub">Three steps — and your team is in the league</p>
+      <p class="wizard-sub">Three steps - and your team is in the league</p>
     </div>
 
     <!-- ── Messages from Django (messages.error / messages.success) ── -->
@@ -49,7 +49,7 @@
 
       <div class="wizard-card">
 
-        <!-- STEP 1 — Team information -->
+        <!-- STEP 1 - Team information -->
         <div class="wizard-step-content active" data-content="1">
           <div class="step-content-title">Team information</div>
           <div class="step-content-sub">What will your team be called in the league?</div>
@@ -83,7 +83,7 @@
             <div class="f">
               <label>Category</label>
 
-              <!-- Real select — hidden, but exists for form submission -->
+              <!-- Real select - hidden, but exists for form submission -->
               <select id="w-category" name="category" style="display:none">
                 <option value="">Select a category</option>
                 {% for cat in categories %}
@@ -112,7 +112,7 @@
           </div>
         </div>
 
-        <!-- STEP 2 — Captain (automatically the current user) -->
+        <!-- STEP 2 - Captain (automatically the current user) -->
         <div class="wizard-step-content" data-content="2">
           <div class="step-content-title">Team captain</div>
           <div class="step-content-sub">Your account automatically becomes the captain</div>
@@ -136,16 +136,16 @@
           </div>
         </div>
 
-        <!-- STEP 3 — Summary + actual submit -->
+        <!-- STEP 3 - Summary + actual submit -->
         <div class="wizard-step-content" data-content="3">
           <div class="summary-block">
             <div class="summary-icon">🏀</div>
             <div class="step-content-title" style="text-align:center">Review your details</div>
-            <div class="summary-team-name" id="summary-name">—</div>
+            <div class="summary-team-name" id="summary-name">-</div>
 
             <div class="summary-rows">
-              <div class="summary-row"><span>Game format</span><span id="summary-discipline">—</span></div>
-              <div class="summary-row"><span>Category</span><span id="summary-category">—</span></div>
+              <div class="summary-row"><span>Game format</span><span id="summary-discipline">-</span></div>
+              <div class="summary-row"><span>Category</span><span id="summary-category">-</span></div>
               <div class="summary-row"><span>Captain</span><span>{{ request.user.first_name }} {{ request.user.last_name }}</span></div>
             </div>
           </div>

@@ -292,7 +292,7 @@
   margin-top: .1rem;
 }
 
-/* Bottom row — form + arrow */
+/* Bottom row - form + arrow */
 .tc-bottom {
   display: flex;
   align-items: center;
@@ -612,7 +612,7 @@
   .pr-stats { gap: .6rem; }
 }
 
-/* ── FILTER — CATEGORY DROPDOWN ── */
+/* ── FILTER - CATEGORY DROPDOWN ── */
 .filter-spacer {
   flex: 1;
 }
@@ -672,7 +672,7 @@
   color: rgba(255,255,255,.8);
 }
 
-/* Options — the browser renders these itself, but at least give them a dark background */
+/* Options - the browser renders these itself, but at least give them a dark background */
 .filter-select option {
   background: #1a1a1a;
   color: var(--white);

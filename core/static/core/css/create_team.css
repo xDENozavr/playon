@@ -198,7 +198,7 @@ body { background: #060606; }
 .roster-progress.ready { color: #6fcf97; }
 .roster-progress.ready b { color: #6fcf97; }
 
-/* ── STEP 4 — Done / summary ── */
+/* ── STEP 4 - Done / summary ── */
 .summary-icon {
   width: 64px; height: 64px;
   border-radius: 50%;

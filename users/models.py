@@ -9,7 +9,7 @@ class UserManager(BaseUserManager):
 
     Django's default UserManager expects to build users from a
     username. Since USERNAME_FIELD is "email" here, create_user()/
-    create_superuser() must be overridden to accept email instead —
+    create_superuser() must be overridden to accept email instead -
     without this, createsuperuser and User.objects.create_user()
     wouldn't work at all.
     """

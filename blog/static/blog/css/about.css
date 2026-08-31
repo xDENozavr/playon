@@ -227,7 +227,7 @@
   display: block;
 }
 
-/* Middle column — holds the dot and the line */
+/* Middle column - holds the dot and the line */
 .tl-mid {
   display: flex;
   flex-direction: column;

@@ -33,7 +33,7 @@ class TeamAdmin(admin.ModelAdmin):
     search_fields = ["name", "captain__user__email"]
 
     # category is a ManyToManyField, which Django admin can't render
-    # directly in list_display (E109) — one row could need several
+    # directly in list_display (E109) - one row could need several
     # values shown at once. This method flattens them into a single
     # comma-separated string instead.
     def get_categories(self, obj):
