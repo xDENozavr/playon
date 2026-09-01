@@ -53,3 +53,14 @@ if (track && dotsEl && btnPrev && btnNext) {
     window.addEventListener('resize', () => goTo(current));
   }
 }
+
+// ── Mobile navigation toggle ──
+const hamburger = document.getElementById('nav-hamburger');
+const navLinks = document.getElementById('nav-links');
+
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+}

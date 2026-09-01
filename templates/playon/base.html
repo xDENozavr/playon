@@ -18,7 +18,14 @@
   <!-- Navigation -->
   <nav>
     <div class="nav-logo">Play<span>On</span></div>
-    <ul class="nav-links">
+
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
       <li><a href="{% url 'index' %}">Home</a></li>
       <li><a href="{% url 'about' %}">About</a></li>
       <li><a href="{% url 'calendar' %}">Calendar</a></li>
@@ -59,14 +66,14 @@
         <li><a href="{% url 'rules' %}">Rules</a></li>
         <li><a href="{% url 'calendar' %}">Calendar</a></li>
         <li><a href="{% url 'club' %}">Clubs</a></li>
-        <li><a href="#">Photo archive</a></li>
+        <li><a href="{% url 'archive' %}">Photo archive</a></li>
       </ul>
     </div>
 
     <div class="footer-links">
       <h4>Contact</h4>
       <ul>
-        <li><a href="mailto:playon@gmail.com">playon@gmail.com</a></li>
+        <li><a href="mailto:vlasov.den03@gmail.com">vlasov.den03@gmail.com</a></li>
         <li><a href="#" target="_blank">Instagram</a></li>
         <li><a href="#" target="_blank">Telegram</a></li>
       </ul>
