@@ -136,11 +136,11 @@ class Event(models.Model):
 
     title = models.CharField(max_length=200, verbose_name='title')
     event_type = models.CharField(max_length=20, choices=EventType.choices, verbose_name='event type')
+    team_type = models.BooleanField(verbose_name='team type (basketball / streetball)')
     category = models.ForeignKey('TeamCategory', on_delete=models.PROTECT, related_name='events', verbose_name='category')
     date = models.DateField(verbose_name='event date')
     time = models.TimeField(verbose_name='event time')
     location = models.ForeignKey('Club', on_delete=models.SET_NULL, null=True, blank=True, related_name='events', verbose_name='location')
-    registration_deadline = models.DateTimeField(verbose_name='registration deadline')
     max_teams = models.PositiveSmallIntegerField(default=16, verbose_name='max teams')
     description = models.TextField(blank=True, verbose_name='description')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
@@ -168,3 +168,18 @@ class RegToTournament(models.Model):
 
     def __str__(self):
         return f'{self.team} → {self.event}'
+
+
+class PlayerOfTheWeek(models.Model):
+    profile = models.ForeignKey('users.Profile', on_delete=models.CASCADE, related_name='player_of_week_entries', verbose_name='player')
+    quote = models.CharField(max_length=200, blank=True, verbose_name='quote')
+    is_active = models.BooleanField(default=True, verbose_name='currently featured')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='created at')
+
+    class Meta:
+        verbose_name = 'Player of the Week'
+        verbose_name_plural = 'Player of the Week'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.profile} ({self.created_at.date()})'

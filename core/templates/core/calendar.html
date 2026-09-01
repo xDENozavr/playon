@@ -22,8 +22,12 @@
             <span class="hero-up-label">Events</span>
           </div>
           <div class="hero-up-item">
-            <span class="hero-up-val">{{ closing_soon }}</span>
-            <span class="hero-up-label">Closing soon</span>
+            <span class="hero-up-val">{{ tournaments_count }}</span>
+            <span class="hero-up-label">Tournaments</span>
+          </div>
+          <div class="hero-up-item">
+            <span class="hero-up-val">{{ other_count }}</span>
+            <span class="hero-up-label">Other</span>
           </div>
         </div>
       </div>
@@ -54,7 +58,6 @@
   <!-- ══════════ EVENTS ══════════ -->
   <section class="events-section" id="events-section">
 
-    <!-- ── JUNE 2026 ── -->
     <div class="month-group reveal" data-month="june">
       <div class="month-title">June 2026 <span>3 Events</span></div>
 
@@ -77,9 +80,6 @@
               <span class="ec-meta-item"><span class="ico">📍</span> {{ event.location.district|default:"TBA" }}</span>
               <span class="ec-meta-item"><span class="ico">🏷</span> {{ event.category.category_name }}</span>
               <span class="ec-meta-item"><span class="ico">👥</span> Max {{ event.max_teams }} teams</span>
-            </div>
-            <div class="ec-deadline">
-              Registration until <em>{{ event.registration_deadline|date:"F d" }}</em>
             </div>
             <a href="{% url 'register_for_event' event.id %}" class="ec-reg-btn">
               Enter / Register →
@@ -217,5 +217,9 @@
 
     </div>
   </div>
+
+{% block scripts %}
+  <script src="{% static 'core/js/calendar.js' %}"></script>
+{% endblock %}
 
 {% endblock %}

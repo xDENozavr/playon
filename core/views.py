@@ -9,9 +9,6 @@ from django.db.models import Count, Q, F
 from .serializers import ClubSerializer, TeamCategorySerializer, TeamSerializer, GameSerializer
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 
-from django.utils import timezone
-from datetime import timedelta
-
 def club(request):
     all_clubs = Club.objects.all().order_by('district')
     coaches_count = Club.objects.values('coach_name').distinct().count()
@@ -29,12 +26,14 @@ def club(request):
 def calendar(request):
     all_events = Event.objects.select_related('category', 'location').order_by('date')
     total_events = all_events.count()
-    closing_soon = all_events.filter(registration_deadline__gte=timezone.now(), registration_deadline__lte=timezone.now() + timedelta(days=3)).count()
+    tournaments_count = all_events.filter(event_type='tournament').count()
+    other_count = all_events.filter(event_type='other').count()
 
     context = {
         'events': all_events,
         'total_events': total_events,
-        'closing_soon': closing_soon,
+        'tournaments_count': tournaments_count,
+        'other_count': other_count,
     }
     return render(request, 'core/calendar.html', context)
 
@@ -173,15 +172,18 @@ def register_for_event(request, event_id):
         team = get_object_or_404(Team, pk=team_id, captain=request.user.profile)
 
         try:
+            if team.team_type != event.team_type:
+                expected = "Basketball" if event.team_type else "Streetball"
+                raise ValidationError(f'This event is for {expected} teams only.')
             team.check_gender_compatibility(event.category)
             team.check_age_compatibility(event.category)
         except ValidationError as e:
-            messages.error(request, e.message)
+            messages.error(request, e.message if hasattr(e, 'message') else str(e))
             return redirect('register_for_event', event_id=event.id)
 
         if RegToTournament.objects.filter(event=event, team=team).exists():
             messages.error(request, f'"{team.name}" is already registered for this event.')
-            return redirect('calendar')
+            return redirect('register_for_event', event_id=event.id)
 
         RegToTournament.objects.create(event=event, team=team)
         messages.success(request, f'"{team.name}" has been registered for "{event.title}"!')
