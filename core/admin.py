@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Club, TeamCategory, Team, Game, RegToTournament
+from .models import Club, TeamCategory, Team, Game, RegToTournament, PlayerOfTheWeek
 
 class ClubAdmin(admin.ModelAdmin):
     list_display = ["district", "address", "coach_name", "main_phone_number"]
@@ -46,8 +46,13 @@ class RegToTournamentAdmin(admin.ModelAdmin):
     list_filter = ["is_paid"]
     search_fields = ["team__name", "event__title"]
 
+class PlayerOfTheWeekAdmin(admin.ModelAdmin):
+    list_display = ['profile', 'is_active', 'created_at']
+    list_filter = ['is_active']
+
 admin.site.register(Club, ClubAdmin)
 admin.site.register(TeamCategory, TeamCategoryAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Game)
 admin.site.register(RegToTournament, RegToTournamentAdmin)
+admin.site.register(PlayerOfTheWeek, PlayerOfTheWeekAdmin)

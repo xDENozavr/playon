@@ -127,31 +127,23 @@
     <h2 class="section-title reveal">PLAYER<br>OF THE WEEK</h2>
 
     <div class="players-grid reveal">
-      <div class="player-card" data-num="">
-        <div class="player-name">Artem Kozlov</div>
-        <!-- <div class="player-stats">
-          <div class="pstat">
-            <div class="pstat-val">24.1</div>
-            <div class="pstat-key">Points</div>
-          </div>
-          <div class="pstat">
-            <div class="pstat-val">7.4</div>
-            <div class="pstat-key">Rebounds</div>
-          </div>
-          <div class="pstat">
-            <div class="pstat-val">3.2</div>
-            <div class="pstat-key">Assists</div>
-          </div>
-        </div> -->
-      </div>
-
+      {% if player_of_week %}
+        <div class="player-card" data-num="">
+          <div class="player-name">{{ player_of_week.profile.user.first_name }} {{ player_of_week.profile.user.last_name }}</div>
+          {% if player_of_week.quote %}
+            <div class="player-quote">{{ player_of_week.quote }}</div>
+          {% endif %}
+        </div>
+      {% else %}
+        <p style="color: rgba(255,255,255,.4);">No player featured this week yet.</p>
+      {% endif %}
     </div>
   </section>
 
   <!-- LEAGUE REGISTRATION -->
   <section id="register" class="register-section">
-    <div class="section-label">Season 2026 is open</div>
-    <h2 class="section-title">JOIN<br>US</h2>
+    <div class="section-label">Season 2027 is open</div>
+    <h2 class="section-title">JOIN<br>PLAYON</h2>
     <p>Build your team and join the city league. Games every weekend, fair referees, online stats.</p>
     <a href="{% url 'create_team' %}" class="btn-white">Register a team →</a>
   </section>

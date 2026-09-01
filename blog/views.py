@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import News
-from core.models import Team, Club, TeamCategory, Game
+from core.models import Team, Club, TeamCategory, Game, PlayerOfTheWeek
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q, F
@@ -74,6 +74,7 @@ def index(request):
         )
     games_played = Game.objects.filter(is_finished=True).count()
 
+    player_of_week = PlayerOfTheWeek.objects.filter(is_active=True).select_related('profile__user').first()
     context = {
         'teams_count': get_teams_count(),
         'players_amount': get_player_estimate(),
@@ -81,6 +82,7 @@ def index(request):
         'news': all_news,
         'top_teams': top_teams,
         'games_played': games_played,
+        'player_of_week': player_of_week,
     }
     return render(request, 'blog/index.html', context)
 
