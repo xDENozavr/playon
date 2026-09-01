@@ -139,7 +139,7 @@
         <div class="tl-mid"><div class="tl-dot tl-dot-now"></div><div class="tl-line"></div></div>
         <div class="tl-content">
           <h4>Now</h4>
-          <p>18 teams, 214 players, 6 courts. And we're just warming up.</p>
+          <p>{{ teams_count }} teams, {{ players_amount }} players, {{ clubs_count }} courts. And we're just warming up.</p>
         </div>
       </div>
 
@@ -214,7 +214,7 @@
 
       <div class="member-card">
         <div class="member-avatar">DN</div>
-        <div class="member-name">Denys Novikov</div>
+        <div class="member-name">Denys Vlasov</div>
         <div class="member-role">Stats & IT</div>
         <p class="member-bio">Built the stats system from scratch. If you see a nice-looking number on the site, that's his work.</p>
       </div>
@@ -236,13 +236,13 @@
 
     <div class="partners-row">
       <div class="partner-cell">
-        <div class="partner-name">Kryvbasbasket</div>
+        <div class="partner-name">Nike</div>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-name">Adidas</div>
       </div>
       <div class="partner-cell">
         <div class="partner-name">Sport Complex<br>Center</div>
-      </div>
-      <div class="partner-cell">
-        <div class="partner-name">Vikonda</div>
       </div>
       <div class="partner-cell">
         <div class="partner-name">SportCity<br>Gear</div>
@@ -255,8 +255,8 @@
 
 <!-- REGISTRATION -->
   <section id="register" class="register-section">
-    <div class="section-label">Season 2026 is open</div>
-    <h2 class="section-title">JOIN<br>US</h2>
+    <div class="section-label">Season 2027 is open</div>
+    <h2 class="section-title">JOIN<br>PLAYON</h2>
     <p>Build your team and join the city league. Games every weekend, fair referees, online stats.</p>
     <a href="{% url 'create_team' %}" class="btn-white">Register a team →</a>
   </section>

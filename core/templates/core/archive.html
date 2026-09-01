@@ -1,0 +1,28 @@
+{% extends 'playon/base.html' %}
+{% load static %}
+
+{% block content %}
+  <section class="archive-placeholder">
+    <h1>Under construction</h1>
+  </section>
+{% endblock %}
+
+{% block extra_css %}
+  <style>
+    .archive-placeholder {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(72px + 2rem) 2rem 4rem;
+    }
+
+    .archive-placeholder h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.25);
+      text-align: center;
+    }
+  </style>
+{% endblock %}
