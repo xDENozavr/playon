@@ -119,3 +119,6 @@ class ProfileDetailAPI(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+
+def archive(request):
+    return render(request, 'core/archive.html')

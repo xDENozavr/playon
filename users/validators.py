@@ -34,7 +34,7 @@ def validate_avatar_format(value):
 
 def validate_phone(value):
     """Require Ukrainian phone numbers in international format (+380XXXXXXXXX)."""
-    if not value:  # <--- Пропускаем пустые значения
+    if not value:
         return
 
     if not re.match(r'^\+380\d{9}$', value):
