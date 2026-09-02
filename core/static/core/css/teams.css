@@ -292,36 +292,6 @@
   margin-top: .1rem;
 }
 
-/* Bottom row - form + arrow */
-.tc-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  z-index: 1;
-}
-
-.tc-form {
-  display: flex;
-  gap: 4px;
-}
-.tc-form-dot {
-  width: 9px; height: 9px;
-  border-radius: 50%;
-}
-.tc-form-dot.w { background: rgba(111,207,97,.8); }
-.tc-form-dot.l { background: rgba(235,87,87,.7); }
-
-.tc-arrow {
-  font-size: .8rem;
-  color: rgba(255,255,255,.2);
-  transition: color .2s, transform .2s;
-}
-.team-card:hover .tc-arrow {
-  color: var(--red);
-  transform: translateX(4px);
-}
-
 /* Animated bottom divider */
 .tc-line {
   position: absolute;
