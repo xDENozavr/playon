@@ -59,6 +59,8 @@ nav {
   font-size: 1.8rem;
   letter-spacing: 0.12em;
   color: var(--white);
+  text-decoration: none;
+  cursor: pointer;
 }
 .nav-logo span { color: var(--red); }
 
