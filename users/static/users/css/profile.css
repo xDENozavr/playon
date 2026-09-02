@@ -162,7 +162,7 @@ body { background: #080808; }
   font-family: 'Barlow Condensed', sans-serif;
   font-size: .63rem; font-weight: 700;
   letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(255,255,255,.28);
+  color: rgba(255,255,255,.60);
   display: block; margin-bottom: .38rem;
 }
 .edit-field-wrap { position: relative; display: flex; align-items: center; }
@@ -179,12 +179,12 @@ body { background: #080808; }
   -webkit-appearance: none;
 }
 .edit-field input:focus { border-color: var(--red); background: rgba(134,0,1,.05); }
-.edit-field input:disabled { color: rgba(255,255,255,.45); cursor: not-allowed; }
+.edit-field input:disabled { color: rgba(255,255,255,.60); cursor: not-allowed; }
 .edit-field .unit {
   position: absolute; right: .9rem;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: .7rem; font-weight: 700; letter-spacing: .1em;
-  color: rgba(255,255,255,.18); pointer-events: none;
+  color: rgba(255,255,255,.60); pointer-events: none;
 }
 
 .edit-actions { display: flex; gap: .7rem; margin-top: .2rem; }
