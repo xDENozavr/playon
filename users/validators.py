@@ -28,8 +28,16 @@ def validate_avatar_format(value):
         img = Image.open(value)
         if img.format not in allowed_formats:
             raise ValidationError(f"Unsupported image format: {img.format}. Use JPEG or PNG.")
+    except ValidationError:
+        raise
     except Exception:
         raise ValidationError("The uploaded file is not a valid image.")
+    finally:
+        # Image.open() reads through the file to inspect it, leaving
+        # the pointer at the end. Whatever processes this file next
+        # (e.g. Cloudinary's uploader) needs to read it from the
+        # start again, or it'll see an empty stream.
+        value.seek(0)
 
 
 def validate_phone(value):
