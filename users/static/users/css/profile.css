@@ -179,7 +179,7 @@ body { background: #080808; }
   -webkit-appearance: none;
 }
 .edit-field input:focus { border-color: var(--red); background: rgba(134,0,1,.05); }
-.edit-field input:disabled { color: rgba(255,255,255,.2); cursor: not-allowed; }
+.edit-field input:disabled { color: rgba(255,255,255,.45); cursor: not-allowed; }
 .edit-field .unit {
   position: absolute; right: .9rem;
   font-family: 'Barlow Condensed', sans-serif;
