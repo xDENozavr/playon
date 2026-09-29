@@ -95,7 +95,7 @@
 
       <div class="field-row">
         <div class="field">
-          <label for="r-firstname">First name</label>
+          <label for="r-firstname" class="required">First name</label>
           <div class="field-wrap">
             <input type="text" id="r-firstname" name="first_name" placeholder="Alex" autocomplete="given-name">
             <span class="field-ico">👤</span>
@@ -103,7 +103,7 @@
           <div class="field-error" id="err-firstname">Enter your first name</div>
         </div>
         <div class="field">
-          <label for="r-lastname">Last name</label>
+          <label for="r-lastname" class="required">Last name</label>
           <div class="field-wrap">
             <input type="text" id="r-lastname" name="last_name" placeholder="Smith" autocomplete="family-name">
           </div>
@@ -131,7 +131,7 @@
       </div>
 
       <div class="field">
-        <label for="r-email">Email</label>
+        <label for="r-email" class="required">Email</label>
         <div class="field-wrap">
           <input type="email" id="r-email" name="email" placeholder="example@gmail.com" autocomplete="email">
           <span class="field-ico">✉</span>
@@ -148,7 +148,7 @@
       </div>
 
       <div class="field">
-        <label for="f-city">City:</label>
+        <label for="f-city" class="required">City:</label>
         <div class="field-wrap">
           <input type="text" name="city" id="f-city" placeholder="e.g. Vinnytsia" required>
           <span class="field-ico">🏙</span>
@@ -156,7 +156,7 @@
       </div>
 
       <div class="field">
-        <label for="r-password">Password</label>
+        <label for="r-password" class="required">Password</label>
         <div class="field-wrap">
           <input type="password" id="r-password" name="password1" placeholder="At least 8 characters" autocomplete="new-password">
           <button class="toggle-pass" type="button" data-target="r-password" aria-label="Show password">👁</button>
@@ -174,7 +174,7 @@
       </div>
 
       <div class="field">
-        <label for="r-password2">Confirm password</label>
+        <label for="r-password2" class="required">Confirm password</label>
         <div class="field-wrap">
           <input type="password" id="r-password2" name="password2" placeholder="Repeat password" autocomplete="new-password">
           <button class="toggle-pass" type="button" data-target="r-password2" aria-label="Show password">👁</button>

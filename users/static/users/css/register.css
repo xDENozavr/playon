@@ -1,4 +1,9 @@
 /* ── PAGE-SPECIFIC RESET ── */
+.field label.required::after {
+  content: " *";
+  color: var(--red);
+}
+
 .auth-page {
   min-height: 100vh;
   display: grid;
