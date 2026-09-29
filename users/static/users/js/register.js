@@ -111,6 +111,8 @@ if (btnRegister) {
       validate('r-firstname', 'err-firstname', v => v.length >= 2),
       validate('r-lastname',  'err-lastname',  v => v.length >= 2),
       validate('r-email',     'err-email',     v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)),
+      validate('r-birth-date', 'err-birth-date', v => v.length > 0),
+      validate('r-gender',    'err-gender',    v => v.length > 0),
       validate('r-password',  'err-password',  v => v.length >= 8),
       (() => {
         const match = p1 === p2;
